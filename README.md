@@ -2,14 +2,11 @@
 
 The same software projects that run in the BuildWise CT server.
 
-* RSpec (Ruby)
+* RSpec (Ruby) with Selenium WebDriver
  
+* PyTest (Python) with Selenium WebDriver
   
-* Mocha (JavaScript)
-
-
-* PyTest (Python)
-
+* Mocha (JavaScript) with Selenium WebDriver
 
 * Cucumber (Ruby)
 
