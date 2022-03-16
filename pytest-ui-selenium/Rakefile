@@ -1,0 +1,105 @@
+require 'rubygems'
+require 'fileutils'
+
+load File.join(File.dirname(__FILE__), "buildwise.rake")
+
+BUILDWISE_QUICK_PROJECT_ID = "agiletravel-quick-build-python-unittest" 
+BUILDWISE_FULL_PROJECT_ID = "agiletravel-full-build-python-unittest"
+BUILDWISE_URL = ENV["BUILDWISE_MASTER"] || "http://buildwise.macmini"
+
+FULL_BUILD_MAX_TIME = 60 * 60   # 1 hour
+FULL_BUILD_CHECK_INTERVAL = 30  # 1 minute
+
+$test_dir =  File.expand_path( File.join(File.dirname(__FILE__), "tests" ))  # change to aboslution path if invoktion is not this directory
+
+# Preqrueisite
+# - Python 3 (make sure python3 is in PATH, Mac built-in python is Python2)
+# - unittest selenium installed by pip
+# - pip install unittest-xml-reporting
+# - pip install nose
+
+desc "run all tests in this folder"
+task "ui_tests:quick"  do
+  
+  ### the below run all test scripts under test folder, but without reporting  
+  # 
+  # `python -m unittest  discover test -p "*_test.py"`
+
+  ## Runing individually
+  #
+  # specs_for_quick_build.each do |file|
+  #   `python #{file}`
+  # end
+  
+  ## Runing with nose
+  # 
+  reports_dir =  File.join(File.dirname(__FILE__), "reports")
+  FileUtils.rm_rf(reports_dir) if File.exists?(reports_dir)
+  FileUtils.mkdir_p(reports_dir)
+  FileUtils.chdir(File.dirname(__FILE__))
+  
+  # system("nosetests --with-xunit --xunit-file=reports/TEST-SUITE.xml test")
+
+  # Running with pyTest
+  system("pytest --junit-xml=reports/TEST-SUITE.xml test")
+end
+
+
+def specs_for_quick_build
+  # list test files to be run in a quick build
+  [
+    "1_login_test.py", 
+    "2_flight_test.py",
+    "3_passenger_test.py", 
+    "4_payment_test.py",
+    "not_exists_test.py"
+  ]
+end
+
+def excluded_spec_files
+  []
+end
+
+
+desc "run all tests in this folder"
+task "ci:ui_tests:quick" do
+    reports_dir = File.join(File.dirname(__FILE__),  "reports")
+    FileUtils.rm_rf(reports_dir)if File.exists?(reports_dir)
+    FileUtils.mkdir_p(reports_dir)
+    
+    exit_code = 0
+
+    specs_to_be_executed = buildwise_determine_specs_for_quick_build(specs_for_quick_build, excluded_spec_files, $test_dir);
+
+    specs_to_be_executed.each do |test_file|
+      junit_xml = File.expand_path File.join(reports_dir, File.basename(test_file).gsub(".py", ".xml"))
+      cmd = "pytest --junitxml=#{junit_xml} #{test_file} "
+      puts cmd
+      result = system(cmd)
+      if exit_code == 0 && !result
+        exit_code = -1
+      end   
+      sleep 0.25
+    end
+    exit(exit_code)  
+end
+
+
+
+
+## Full Build
+#
+#  TODO - how to determin useing RSpec or Cucumber
+#
+desc "Running tests in parallel"
+task "ci:ui_tests:full" do
+  build_id = buildwise_start_build(:working_dir => File.expand_path(File.dirname(__FILE__)),
+                                   :ui_test_dir => ["tests"],
+                                   :excluded => excluded_spec_files || [],
+                                   :parallel => true,
+                                   :test_framework => "unittest"
+  )
+
+  buildwise_montior_parallel_execution(build_id, :max_wait_time => FULL_BUILD_MAX_TIME, :check_interval => FULL_BUILD_CHECK_INTERVAL)
+
+end

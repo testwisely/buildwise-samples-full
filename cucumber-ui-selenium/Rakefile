@@ -1,0 +1,190 @@
+# You need Ruby (Rake, Cucumber 1.3.3, ci_reporter gems installed)
+#   Simplest way on Windows is to install RubyShell (http://testwisely.com/downloads)
+
+require 'rubygems'
+require 'cucumber'
+require 'cucumber/rake/task'
+
+load File.join(File.dirname(__FILE__), "buildwise.rake")
+
+## Settings: Customize here...
+#
+BUILDWISE_URL = ENV["BUILDWISE_MASTER"] || "http://buildwise.dev"
+BUILDWISE_FULL_PROJECT_ID  = "agiletravel-full-build-cucumber"
+
+FULL_BUILD_MAX_TIME = 60 * 60   # 1 hour
+FULL_BUILD_CHECK_INTERVAL = 60  # 1 minute
+
+$test_dir =  File.expand_path(File.join(File.dirname(__FILE__), "features"))  # change to aboslution path if invoktion is not this directory
+
+# List tests you want to exclude
+#
+def excluded_feature_files
+  ["ignore.feature", "bad_test.feature", "03_passenger.feature"]
+end
+
+def all_features
+  Dir.glob("#{$test_dir}/*.feature")
+end
+
+def features_for_quick_build
+  # list test files to be run in a quick build
+  [
+    "01_login.feature",
+    "02_flight.feature",
+    "03_passenger.feature",
+    "04_payment.feature"
+  ]
+end
+
+def determine_specs_for_quick_build
+  features_to_be_executed = []
+
+  enable_intelligent_ordering = ENV["INTELLIGENT_ORDERING"] && ENV["INTELLIGENT_ORDERING"].to_s == "true"
+  puts "[INFO] intelligent ordering? => #{enable_intelligent_ordering.to_s rescue 'false'}"
+  if enable_intelligent_ordering && ENV["BUILDWISE_PROJECT_IDENTIFIER"]
+    ordered_specs = buildwise_ui_test_order(ENV["BUILDWISE_PROJECT_IDENTIFIER"])
+    puts "[INFO] Execution order based history of quick build: #{ordered_specs.inspect}"
+    if ordered_specs.nil? || ordered_specs.compact.empty? || ordered_specs.class != Array
+      specs_to_be_executed += specs_for_quick_build  if specs_to_be_executed.empty?
+    else
+      # neat sorting thanks to Ruby
+      specs_to_be_executed = ordered_specs.dup
+      specs_to_be_executed = specs_to_be_executed.sort_by{|x| ordered_specs.include?(File.basename(x)) ? ordered_specs.index(File.basename(x)) : specs_to_be_executed.count }    
+      puts "[INFO] After intelligent sorting => #{specs_to_be_executed.inspect}"        
+    end    
+  end
+
+  enable_dyanmic_build_queue = ENV["DYNAMIC_FEEDBACK"] && ENV["DYNAMIC_FEEDBACK"].to_s == "true" && ENV["DYNAMIC_FEEDBACK_PROJECT_IDENTIFIER"]
+  puts "[INFO] dynamic feedback? => #{enable_dyanmic_build_queue}"  
+  if enable_dyanmic_build_queue
+    begin
+      # dynamic build process: get failed tests from last failed full build
+      failed_full_build_tests = buildwise_failed_build_tests(ENV["DYNAMIC_FEEDBACK_PROJECT_IDENTIFIER"])
+      if failed_full_build_tests && failed_full_build_tests.size > 0
+        failed_full_build_tests.each do |x|
+          full_path = File.join($spec_dir, x)
+          features_to_be_executed.insert(0, full_path) unless features_to_be_executed.include?(full_path)
+        end    
+      end
+    
+    rescue => e
+      puts "[ERROR] failed to check for full build: #{e}"
+    end
+  end
+
+  if features_to_be_executed.empty?
+    features_to_be_executed = features_for_quick_build
+  else
+    specs_left_over = features_for_quick_build - features_to_be_executed
+    features_to_be_executed += specs_left_over
+    features_to_be_executed.flatten!    
+  end
+  
+  features_to_be_executed -= excluded_feature_files
+  features_to_be_executed.uniq!
+  puts "[INFO] Uniq : #{features_to_be_executed.inspect}"
+
+  features_to_be_executed.reject! {|a_test|  !File.exists?(File.join($test_dir, a_test)) }
+  puts "[INFO] Filter Not exists : #{features_to_be_executed.inspect}"
+
+  puts "[INFO] Final Test execution in order => #{features_to_be_executed.inspect}"
+  # using full path
+  features_to_be_executed = features_to_be_executed.collect{|x| File.join("features", x)}    
+end
+
+task "set_work_directory"  do
+  FileUtils.chdir(File.dirname(__FILE__));
+end
+
+desc "install the gem libraries required for running tests"
+task "install-lib" do
+  system("gem install cucumber selenium-webdriver")  
+end
+
+desc "run all tests in this folder"
+Cucumber::Rake::Task.new("ui_tests:quick")  do |t|
+  Rake::Task['set_work_directory'].invoke
+  
+  log_dir = File.expand_path(File.join(File.dirname(__FILE__), "log"))
+  FileUtils.rm_rf(log_dir) if File.exists?(log_dir)
+  FileUtils.mkdir(log_dir)
+  
+  features_to_be_executed = determine_specs_for_quick_build()
+  puts "[INFO] Tests in order => #{features_to_be_executed.collect {|x| File.basename(x)}.inspect}"
+  
+  file_list = features_to_be_executed.join(" ")
+
+  # feel free to add/rmeove formatter, junit is required for CI reporting
+  t.cucumber_opts = [
+    "--format progress -o log/features.log",
+    "--format junit    -o log/",
+    "--format html     -o log/features.html",
+    # "--format pretty",      # can be quite lengthy
+    file_list
+  ]
+end
+
+
+desc "run a set of cucumber feature tests in one process"
+task "ci:ui_tests:quick_one_process"  do
+  build_id = buildwise_start_build(:working_dir => File.expand_path(File.dirname(__FILE__)))
+  puts "[Rake] new build id =>|#{build_id}|"
+  begin
+    Rake::Task["ui_tests:quick"].invoke
+    # puts "[Rake] Invoke Finish"
+  ensure
+    puts "Finished: Notify build status"
+    sleep 2 # wait a couple of seconds to finish writing last test results xml file out
+    puts "[Rake] finish the build"
+    buildwise_finish_build(build_id)
+  end
+end
+
+
+desc "run a set of cucumber feature tests one by one"
+task "ci:ui_tests:quick_one_by_one" do
+    reports_dir = File.join(File.dirname(__FILE__),  "log")
+    FileUtils.rm_rf(reports_dir) if File.exists?(reports_dir)
+    FileUtils.mkdir_p(reports_dir)
+    
+    exit_code = 0    
+
+    specs_to_be_executed = determine_specs_for_quick_build()
+    specs_to_be_executed.each do |test_file|
+      junit_xml = File.expand_path File.join(reports_dir, File.basename(test_file).gsub(".feature", ".xml"))
+      cmd = "cucumber #{test_file} --format junit --out log"
+      # cmd = "cucumber #{test_file} --format junit --out log/#{junit_xml}"
+      puts cmd
+      result = system(cmd)
+      if exit_code == 0 && !result
+        exit_code = -1
+      end   
+      sleep 0.25
+    end
+    exit(exit_code)
+end
+
+
+
+desc "run all tests in this folder"
+task "ci:ui_tests:quick" do
+  Rake::Task["ci:ui_tests:quick_one_process"].invoke
+end
+
+
+## Full Build
+#
+#  TODO - how to determin useing RSpec or Cucumber
+#
+desc "Running tests in parallel"
+task "ci:ui_tests:full"  do
+  build_id = buildwise_start_build(:working_dir => File.expand_path(File.dirname(__FILE__)),
+    :ui_test_dir => ["features"],
+    :excluded => excluded_feature_files || [],
+    :parallel => true,
+    :test_framework => "Cucumber"  
+  )
+
+  buildwise_montior_parallel_execution(build_id, :max_wait_time => FULL_BUILD_MAX_TIME, :check_interval => FULL_BUILD_CHECK_INTERVAL)
+end

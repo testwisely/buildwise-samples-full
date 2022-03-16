@@ -1,0 +1,33 @@
+<workspace>
+    <opened_files>
+        <entry name="/Users/zhimin/work/projects/agiletravel-ui-tests/selenium-webdriver-cucumber/features/01_login.feature"/>
+        <entry name="/Users/zhimin/work/projects/agiletravel-ui-tests/selenium-webdriver-cucumber/config/cucumber.yml"/>
+        <entry name="/Users/zhimin/work/projects/agiletravel-ui-tests/selenium-webdriver-cucumber/agileway_utils.rb"/>
+        <entry name="/Users/zhimin/work/projects/agiletravel-ui-tests/selenium-webdriver-cucumber/features/support/env.rb"/>
+        <entry name="/Users/zhimin/work/projects/agiletravel-ui-tests/selenium-webdriver-cucumber/features/step_definitions/login_steps.rb"/>
+        <entry name="/Users/zhimin/work/projects/agiletravel-ui-tests/selenium-webdriver-cucumber/features/step_definitions/flight_steps.rb"/>
+        <entry name="/Users/zhimin/work/projects/agiletravel-ui-tests/selenium-webdriver-cucumber/features/support/hooks.rb"/>
+        <entry name="/Users/zhimin/work/projects/agiletravel-ui-tests/selenium-webdriver-cucumber/features/support/step_helper.rb"/>
+        <entry name="/Users/zhimin/work/projects/agiletravel-ui-tests/selenium-webdriver-cucumber/features/support/testwise_formatter_loader.rb"/>
+        <entry name="/Users/zhimin/work/projects/agiletravel-ui-tests/selenium-webdriver-cucumber/features/02_flight.feature"/>
+        <entry name="/Users/zhimin/work/projects/agiletravel-ui-tests/selenium-webdriver-cucumber/features/03_passenger.feature"/>
+        <entry name="/Users/zhimin/work/projects/agiletravel-ui-tests/selenium-webdriver-cucumber/features/04_payment.feature"/>
+        <entry name="/Users/zhimin/work/projects/agiletravel-ui-tests/selenium-webdriver-cucumber/features/login.feature"/>
+    </opened_files>
+    <recent_files>
+        <entry name="/Users/zhimin/work/projects/agiletravel-ui-tests/selenium-webdriver-cucumber/features/login.feature"/>
+        <entry name="/Users/zhimin/work/projects/agiletravel-ui-tests/selenium-webdriver-cucumber/features/04_payment.feature"/>
+        <entry name="/Users/zhimin/work/projects/agiletravel-ui-tests/selenium-webdriver-cucumber/features/03_passenger.feature"/>
+        <entry name="/Users/zhimin/work/projects/agiletravel-ui-tests/selenium-webdriver-cucumber/features/02_flight.feature"/>
+        <entry name="/Users/zhimin/work/projects/agiletravel-ui-tests/selenium-webdriver-cucumber/features/support/testwise_formatter_loader.rb"/>
+        <entry name="/Users/zhimin/work/projects/agiletravel-ui-tests/selenium-webdriver-cucumber/features/support/step_helper.rb"/>
+        <entry name="/Users/zhimin/work/projects/agiletravel-ui-tests/selenium-webdriver-cucumber/features/support/hooks.rb"/>
+        <entry name="/Users/zhimin/work/projects/agiletravel-ui-tests/selenium-webdriver-cucumber/features/step_definitions/flight_steps.rb"/>
+        <entry name="/Users/zhimin/work/projects/agiletravel-ui-tests/selenium-webdriver-cucumber/features/step_definitions/login_steps.rb"/>
+        <entry name="/Users/zhimin/work/projects/agiletravel-ui-tests/selenium-webdriver-cucumber/features/support/env.rb"/>
+        <entry name="/Users/zhimin/work/projects/agiletravel-ui-tests/selenium-webdriver-cucumber/agileway_utils.rb"/>
+        <entry name="/Users/zhimin/work/projects/agiletravel-ui-tests/selenium-webdriver-cucumber/config/cucumber.yml"/>
+        <entry name="/Users/zhimin/work/projects/agiletravel-ui-tests/selenium-webdriver-cucumber/features/01_login.feature"/>
+    </recent_files>
+    <test_suites/>
+</workspace>
