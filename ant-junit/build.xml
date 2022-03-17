@@ -92,12 +92,14 @@
       <arg value="--scan-classpath"/>
       <arg line="--reports-dir build/test-report"/>
     </java>
+    <!--
     <junitreport todir="build/test-report">
       <fileset dir="build/test-report">
         <include name="TEST-*.xml"/>
       </fileset>
       <report format="frames" todir="build/test-report/html"/>
     </junitreport>
+    -->
   </target>
 
   <!-- Failed to launch in-vm tests -->
