@@ -4,3 +4,4 @@
 **/node_modules
 ant-junit/build/*
 ant-junit/build/target/*
+ant-junit/target/

@@ -23,6 +23,7 @@
         <include name="*.jar"/>
   </fileset>
 
+
   <path id="classpath">
     <fileset refid="classpath.library"/>
     <pathelement location="${build.dir}/classes"/>
@@ -52,23 +53,16 @@
         </javac>
     </target>
 
-  <path id="test.classPath">
+  <path id="test.classpath">
+    <fileset refid="classpath.library"/>
     <pathelement location="${build.dir}/classes/main"/>
-    <pathelement location="${build.dir}/classes/classes"/>
-
-    <pathelement location="${lib.dir}/junit-jupiter-api-5.7.0.jar"/>
-    <pathelement location="${lib.dir}/junit-jupiter-engine-5.7.0.jar"/>
-    <pathelement location="${lib.dir}/junit-platform-commons-1.7.0.jar"/>
-    <pathelement location="${lib.dir}/junit-platform-engine-1.7.0.jar"/>
-    <pathelement location="${lib.dir}/junit-platform-launcher-1.7.0.jar"/>
-    <pathelement location="${lib.dir}/opentest4j-1.2.0.jar"/>
-    <pathelement location="${lib.dir}/apiguardian-api-1.1.0.jar"/>
+    <pathelement location="${build.dir}/classes/test"/>
   </path>
 
   <!-- compile unit test, run unit test -->
-  <target name="test.unit.4" depends="compile">
-    <junit  haltonerror="false" haltonfailure="false" fork="yes">
-      <classpath refid="test.classPath"/>
+  <target name="test.unit.4" depends="test.compile">
+    <junit  haltonerror="false" haltonfailure="false" forkmode="">
+      <classpath refid="test.classpath"/>
       <batchtest>
         <fileset dir="${test.unit.dir}">
           <include name="**/*Test*" />
@@ -78,7 +72,7 @@
     </junit>
   </target>
 
-  <target name="test.compile">
+  <target name="test.compile" depends="compile">
     <mkdir dir="${build.dir}/classes/test"/>
     <javac fork="true"
            memoryinitialsize="256m"
@@ -87,26 +81,35 @@
            destdir="build/classes/test"
            debug="true"
            includeantruntime="false"
-           classpathref="test.classPath">
+           classpathref="test.classpath">
       <exclude name="**/SearchTest.java"/>
     </javac>
   </target>
 
 
-  <target name="test.unit" depends="compile, test.compile">
-    <junitlauncher printsummary="yes" haltonfailure="no">
-      <classpath refid="test.classPath"/>
+  <target name="test.unit.console" depends="compile, test.compile">
+    <java classpathref="test.classpath" classname="org.junit.platform.console.ConsoleLauncher" fork="true" failonerror="true">
+      <arg value="--scan-classpath"/>
+      <arg line="--reports-dir build/test-report"/>
+    </java>
+    <junitreport todir="build/test-report">
+      <fileset dir="build/test-report">
+        <include name="TEST-*.xml"/>
+      </fileset>
+      <report format="frames" todir="build/test-report/html"/>
+    </junitreport>
+  </target>
 
-      <!-- test by test - class -->
-      <!--<test name="TestPackage.ConcatTest" haltonfailure="no" /> -->
-
-      <!-- run all found tests in dir with classes -->
-      <testclasses outputdir="../report">
-        <fileset dir="${build.dir}/classes/test"/>
-        <listener type="legacy-brief" sendSysOut="true"/>
-        <listener type="legacy-xml" sendSysErr="true"
-                  sendSysOut="true"/>
-
+  <!-- Failed to launch in-vm tests -->
+  <target name="test.unit.notworking" depends="compile">
+    <junitlauncher haltOnFailure="true" printSummary="true">
+      <classpath refid="test.classpath"/>
+      <testclasses outputdir="build/test-report">
+        <fileset dir="build/test">
+          <include name="**/*Tests.class"/>
+        </fileset>
+        <listener type="legacy-xml" sendSysOut="true" sendSysErr="true"/>
+        <listener type="legacy-plain" sendSysOut="true" />
       </testclasses>
     </junitlauncher>
   </target>
