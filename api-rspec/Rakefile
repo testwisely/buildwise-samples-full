@@ -70,7 +70,7 @@ end
 desc "selected key tests"
 RSpec::Core::RakeTask.new("test:selected") do |t|
   # list test script files you want to run below
-  t.pattern = ["spec/ch02_soap_spec.rb","spec/ch03_rest_spec.rb"]
+  t.pattern = ["spec/01_soap_spec.rb","spec/02_rest_spec.rb"]
 end
 
 
@@ -92,7 +92,7 @@ RSpec::Core::RakeTask.new("test:all") do |t|
 end
 
 desc "run all tests in this folder"
-RSpec::Core::RakeTask.new("ui_tests:quick") do |t|
+RSpec::Core::RakeTask.new("api_tests:quick") do |t|
   specs_to_be_executed = buildwise_determine_specs_for_quick_build(specs_for_quick_build, excluded_spec_files);
   buildwise_formatter =  File.join(File.dirname(__FILE__), "buildwise_rspec_formatter.rb")
   t.rspec_opts = "--pattern my_own_custom_order --require #{buildwise_formatter} #{specs_to_be_executed.join(' ')} --order defined"
@@ -100,18 +100,18 @@ end
 
 
 desc "run quick tests from BuildWise"
-task "ci:ui_tests:quick" => ["ci:setup:rspec"] do
+task "ci:api_tests:quick" => ["ci:setup:rspec"] do
   build_id = buildwise_start_build(:project_name => BUILDWISE_QUICK_PROJECT_ID,
     :working_dir => File.expand_path(File.dirname(__FILE__)),
     :ui_test_dir => ["."],
     :excluded => excluded_spec_files
   )
-  buildwise_run_sequential_build_target(build_id, "ui_tests:quick")
+  buildwise_run_sequential_build_target(build_id, "api_tests:quick")
 end
 
 
 desc "Running tests distributedly"
-task "ci:ui_tests:full" => ["ci:setup:rspec"] do
+task "ci:api_tests:full" => ["ci:setup:rspec"] do
   build_id = buildwise_start_build(:project_name => BUILDWISE_FULL_PROJECT_ID,
                                    :working_dir => File.expand_path(File.dirname(__FILE__)),
                                    :ui_test_dir => ["spec"],
