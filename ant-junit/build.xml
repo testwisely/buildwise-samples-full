@@ -13,7 +13,7 @@
   <import file="buildwise-tomcat-ant.xml" />
   -->
 	  
-  <target name="go" depends="prepare, compile, test.unit, package">
+  <target name="go" depends="prepare, compile, test.unit.console, package">
     
   </target> 
 
