@@ -131,10 +131,10 @@
     </target>
 
     <target name="clover.html">
-        <clover-html-report outdir="build/clover_html"/>
+        <clover-html-report outdir="build/clover-html"/>
     </target>
 
-    <!-- Usage:
+    <!-- Usage: (must run in two steps; also needs to supply clover.jar by -lib flag)
        ant -lib lib/clover clean with.clover test.unit.console
        ant clover.html
     -->
