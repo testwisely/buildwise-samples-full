@@ -1,45 +1,49 @@
 <?xml version="1.0"?>
 <project name="YourProject" default="go" basedir=".">
 
-  <property name="test.ui.dir" value="rspec" />
-  <property name="test.unit.dir" value="src/test/java" />
-  <property name="build.dir" value="build" />
-  <property name="src.dir" value="src/main/java" />
-  <property name="lib.dir" value="lib" />
-  
-  <!-- import buildwise-ant to run rwebspecs in BuildWise -->
-  <!--
-  <import file="buildwise-ant.xml" />  
-  <import file="buildwise-tomcat-ant.xml" />
-  -->
-	  
-  <target name="go" depends="prepare, compile, test.unit.console, package">
-    
-  </target> 
+    <property name="test.ui.dir" value="rspec"/>
+    <property name="test.unit.dir" value="src/test/java"/>
+    <property name="build.dir" value="build"/>
+    <property name="src.dir" value="src/main/java"/>
+    <property name="lib.dir" value="lib"/>
+    <property name="instrumented.dir" value="build/instrumented"/>
 
-  <!-- common build  -->
+    <!-- import buildwise-ant to run rwebspecs in BuildWise -->
+    <!--
+    <import file="buildwise-ant.xml" />
+    <import file="buildwise-tomcat-ant.xml" />
+    -->
+	
+    <taskdef resource="cloverlib.xml" classpath="lib/clover/clover.jar" />
 
-  <fileset id="classpath.library" dir="${lib.dir}">
+    <target name="go" depends="prepare, compile, test.unit.console, package">
+
+    </target>
+
+    <!-- common build  -->
+
+    <fileset id="classpath.library" dir="${lib.dir}">
         <include name="*.jar"/>
-  </fileset>
+    </fileset>
 
 
-  <path id="classpath">
-    <fileset refid="classpath.library"/>
-    <pathelement location="${build.dir}/classes"/>
-  </path>
+    <path id="classpath">
+        <fileset refid="classpath.library"/>
+        <pathelement location="${build.dir}/classes"/>
+    </path>
 
 
-  <target name="clean">
-    <delete dir="${build.dir}"/>
-  </target>
+    <target name="clean">
+        <delete dir="${build.dir}"/>
+        <delete dir=".clover"/>
+    </target>
 
-  <target name="prepare">
-    <mkdir dir="${build.dir}"/>
-  </target>
-  
+    <target name="prepare">
+        <mkdir dir="${build.dir}"/>
+    </target>
 
-  <target name="compile">
+
+    <target name="compile">
         <mkdir dir="${build.dir}/classes/main"/>
         <javac fork="true"
                memoryinitialsize="256m"
@@ -53,76 +57,94 @@
         </javac>
     </target>
 
-  <path id="test.classpath">
-    <fileset refid="classpath.library"/>
-    <pathelement location="${build.dir}/classes/main"/>
-    <pathelement location="${build.dir}/classes/test"/>
-  </path>
+    <path id="test.classpath">
+        <fileset refid="classpath.library"/>
+        <pathelement location="${build.dir}/classes/main"/>
+        <pathelement location="${build.dir}/classes/test"/>
+        <pathelement path="lib/clover/clover.jar"/>
+    </path>
 
-  <!-- compile unit test, run unit test -->
-  <target name="test.unit.4" depends="test.compile">
-    <junit  haltonerror="false" haltonfailure="false" forkmode="">
-      <classpath refid="test.classpath"/>
-      <batchtest>
-        <fileset dir="${test.unit.dir}">
-          <include name="**/*Test*" />
-        </fileset>
-      </batchtest>
-      <formatter type="brief" usefile="false"/>
-    </junit>
-  </target>
+    <!-- compile unit test, run unit test -->
+    <target name="test.unit.4" depends="test.compile">
+        <junit haltonerror="false" haltonfailure="false" forkmode="">
+            <classpath refid="test.classpath"/>
+            <batchtest>
+                <fileset dir="${test.unit.dir}">
+                    <include name="**/*Test*"/>
+                </fileset>
+            </batchtest>
+            <formatter type="brief" usefile="false"/>
+        </junit>
+    </target>
 
-  <target name="test.compile" depends="compile">
-    <mkdir dir="${build.dir}/classes/test"/>
-    <javac fork="true"
-           memoryinitialsize="256m"
-           memorymaximumsize="512m"
-           srcdir="${test.unit.dir}"
-           destdir="build/classes/test"
-           debug="true"
-           includeantruntime="false"
-           classpathref="test.classpath">
-      <exclude name="**/SearchTest.java"/>
-    </javac>
-  </target>
+    <target name="test.compile" depends="compile">
+        <mkdir dir="${build.dir}/classes/test"/>
+        <javac fork="true"
+               memoryinitialsize="256m"
+               memorymaximumsize="512m"
+               srcdir="${test.unit.dir}"
+               destdir="build/classes/test"
+               debug="true"
+               includeantruntime="false"
+               classpathref="test.classpath">
+            <exclude name="**/SearchTest.java"/>
+        </javac>
+    </target>
 
 
-  <target name="test.unit.console" depends="compile, test.compile">
-    <java classpathref="test.classpath" classname="org.junit.platform.console.ConsoleLauncher" fork="true" failonerror="true">
-      <arg value="--scan-classpath"/>
-      <arg line="--reports-dir build/test-report"/>
-    </java>
-    <!--
-    <junitreport todir="build/test-report">
-      <fileset dir="build/test-report">
-        <include name="TEST-*.xml"/>
-      </fileset>
-      <report format="frames" todir="build/test-report/html"/>
-    </junitreport>
+    <target name="test.unit.console" depends="compile, test.compile">
+        <java classpathref="test.classpath" classname="org.junit.platform.console.ConsoleLauncher" fork="true"
+              failonerror="true">
+            <arg value="--scan-classpath"/>
+            <arg line="--reports-dir build/test-report"/>
+        </java>
+        <!--
+        <junitreport todir="build/test-report">
+          <fileset dir="build/test-report">
+            <include name="TEST-*.xml"/>
+          </fileset>
+          <report format="frames" todir="build/test-report/html"/>
+        </junitreport>
+        -->
+    </target>
+
+    <!-- Failed to launch in-vm tests -->
+    <target name="test.unit.notworking" depends="compile">
+        <junitlauncher haltOnFailure="true" printSummary="true">
+            <classpath refid="test.classpath"/>
+            <testclasses outputdir="build/test-report">
+                <fileset dir="build/test">
+                    <include name="**/*Tests.class"/>
+                </fileset>
+                <listener type="legacy-xml" sendSysOut="true" sendSysErr="true"/>
+                <listener type="legacy-plain" sendSysOut="true"/>
+            </testclasses>
+        </junitlauncher>
+    </target>
+
+    <!-- generate war file -->
+    <target name="package">
+    </target>
+
+    <target name="with.clover">
+        <clover-setup/>
+    </target>
+
+    <target name="clover.html">
+        <clover-html-report outdir="build/clover_html"/>
+    </target>
+
+    <!-- Usage:
+       ant -lib lib/clover clean with.clover test.unit.console
+       ant clover.html
     -->
-  </target>
+    <target name="clover.all" depends="with.clover, test.unit.console"
+            description="Runs a build with Clover and generates a Clover data">
+    </target>
 
-  <!-- Failed to launch in-vm tests -->
-  <target name="test.unit.notworking" depends="compile">
-    <junitlauncher haltOnFailure="true" printSummary="true">
-      <classpath refid="test.classpath"/>
-      <testclasses outputdir="build/test-report">
-        <fileset dir="build/test">
-          <include name="**/*Tests.class"/>
-        </fileset>
-        <listener type="legacy-xml" sendSysOut="true" sendSysErr="true"/>
-        <listener type="legacy-plain" sendSysOut="true" />
-      </testclasses>
-    </junitlauncher>
-  </target>
-
-  <!-- generate war file -->
-  <target name="package">
-  </target>
-
-  <!--
-  <target name="deploy">
-    <antcall target="tomcat.deploy"/>
-  </target>
-  -->
+    <!--
+    <target name="deploy">
+      <antcall target="tomcat.deploy"/>
+    </target>
+    -->
 </project>

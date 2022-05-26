@@ -1,6 +1,0 @@
-public class Rental {
-    private Member member;
-    private Resource resource;
-    private boolean isActive = false;
-
-}
