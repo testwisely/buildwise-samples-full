@@ -13,7 +13,10 @@
     <import file="buildwise-ant.xml" />
     <import file="buildwise-tomcat-ant.xml" />
     -->
-	
+
+    <!-- Atlassian Clover is now available as an open-source project.
+         Effective April 11, 2017 Clover is no longer available for purchase or renewal.  -->
+    <!-- reference: https://openclover.org/doc/manual/latest/ant--installation-guide.html -->
     <taskdef resource="cloverlib.xml" classpath="lib/clover/clover.jar" />
 
     <target name="go" depends="prepare, compile, test.unit.console, package">
