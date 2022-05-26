@@ -16,7 +16,7 @@
 
     <!-- Atlassian Clover is now available as an open-source project.
          Effective April 11, 2017 Clover is no longer available for purchase or renewal.  -->
-    <!-- reference: https://openclover.org/doc/manual/latest/ant--installation-guide.html -->
+    <!-- reference: https://openclover.org/doc/manual/latest/ant- -installation-guide.html -->
     <taskdef resource="cloverlib.xml" classpath="lib/clover/clover.jar" />
 
     <target name="go" depends="prepare, compile, test.unit.console, package">
@@ -64,6 +64,7 @@
         <fileset refid="classpath.library"/>
         <pathelement location="${build.dir}/classes/main"/>
         <pathelement location="${build.dir}/classes/test"/>
+        <!-- needed for code coverage, preferally define another path: test.coverage.classpath -->
         <pathelement path="lib/clover/clover.jar"/>
     </path>
 
@@ -129,6 +130,7 @@
     <target name="package">
     </target>
 
+    <!-- === CODE COVARAGE === -->
     <target name="with.clover">
         <clover-setup/>
     </target>
