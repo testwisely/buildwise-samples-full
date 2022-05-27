@@ -10,7 +10,7 @@ public class TestLibrary {
     @BeforeAll
     static void setup() {
         Library.importResource();
-        assertEquals(1, Library.GetResourcesCount());
+        assertEquals(2, Library.GetResourcesCount());
     }
 
     @BeforeEach
