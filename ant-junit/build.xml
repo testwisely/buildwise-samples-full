@@ -156,7 +156,7 @@
     </target>
 
 	<target name="clover.check" depends="with.clover">
-	    <clover-check target="70%"/>
+	    <clover-check target="80%"/>
 	</target>
 	
     <!--
