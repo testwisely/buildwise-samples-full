@@ -27,9 +27,8 @@ public class TestRental{
 
     @DisplayName("Failed Rental")
     @Test
-    void testFailed() {
-
-        assertEquals("Book",  "Invalid");
-
+    void testIsActive() {
+        Rental rental = new Rental();
+        assertEquals(false, rental.isActive());
     }
 }

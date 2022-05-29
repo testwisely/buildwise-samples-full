@@ -5,4 +5,7 @@ public class Rental {
     private Resource resource;
     private boolean isActive = false;
 
+    public boolean isActive() {
+        return isActive;
+    }
 }
