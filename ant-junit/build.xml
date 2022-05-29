@@ -157,7 +157,7 @@
     </target>
 
 	<target name="clover.check" depends="with.clover">
-	    <clover-check target="80%" failureProperty="coverageFailed" haltOnFailure="true"/>
+	    <clover-check target="72%" failureProperty="coverageFailed" haltOnFailure="true"/>
 	</target>
 	
     <!--
