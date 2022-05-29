@@ -137,6 +137,7 @@
 
     <target name="clover.html">
         <clover-html-report outdir="build/clover-html"/>
+        <zip destfile="${build.dir}/coverage.zip" basedir="${build.dir}/clover-html"  />
     </target>
 
     <target name="clover.xml">
