@@ -168,4 +168,11 @@ module TestHelper
     driver.find_element(:link_text, "Sign off").click
   end
   
+
+
+  def flash_notice
+    driver.find_element(:id, "flash_notice").text
+  end
 end
+
+

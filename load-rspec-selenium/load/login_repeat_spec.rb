@@ -28,7 +28,7 @@ describe "User Login Repeat" do
         # puts "#{Time.now - start_time} s"
       }
 
-      # this is user supplying information, not hitting the server
+      # this is user supplying information, not hitting the server      
       driver.find_element(:id, "username").send_keys("agileway")
       driver.find_element(:id, "password").send_keys("testwise")
       
@@ -49,3 +49,10 @@ describe "User Login Repeat" do
     end
   end
 end
+
+
+
+
+
+
+
