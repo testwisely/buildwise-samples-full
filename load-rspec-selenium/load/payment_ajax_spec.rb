@@ -42,7 +42,7 @@ describe "Payment Load (AJAX)" do
     # now on passenger page
     passenger_page = PassengerPage.new(driver)
     passenger_page.enter_last_name("Tester")
-    log_time("Passenger") { 
+    log_time("Submit Passenger Details") { 
       passenger_page.click_next 
     }
 
@@ -53,7 +53,7 @@ describe "Payment Load (AJAX)" do
     payment_page.enter_expiry_month("04")
     payment_page.enter_expiry_year("2016")
     
-    log_time("Payment") {
+    log_time("Submit Payment") {
       payment_page.click_pay_now
       wait = Selenium::WebDriver::Wait.new(:timeout => 10)
       wait.until { driver.page_source.include?("Booking number") }
