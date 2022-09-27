@@ -51,6 +51,8 @@ module LoadTestHelper
     rescue  => e
       error_occurred = e.to_s
     ensure
+      puts("Error occurred: #{error_occurred}") if error_occurred
+      raise error_occurred if error_occurred && debugging?
       # puts [operation, start_time, (Time.now - start_time), 1].inspect
       $log_time_stmt.execute(:operation => data[:operation], :request_type => data[:request_type], :start_time => start_time, :duration => (Time.now.to_f * 1000).to_i - start_time, :successful => error_occurred ? 0 : 1, :error => error_occurred ? error_occurred : nil)
     end
