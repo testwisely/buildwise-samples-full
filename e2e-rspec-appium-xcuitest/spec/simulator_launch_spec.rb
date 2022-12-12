@@ -1,6 +1,6 @@
 load File.dirname(__FILE__) + "/../test_helper.rb"
 
-describe "Appium Set up" do
+describe "Appium Set up - Simulator" do
   include TestHelper
 
   before(:all) do
