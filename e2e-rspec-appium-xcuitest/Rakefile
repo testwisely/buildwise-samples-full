@@ -37,6 +37,7 @@ def specs_for_quick_build
   [
     "simulator_launch_spec.rb", 
     "simulator_convert_spec.rb",
+    "simulator_convert_pom_spec.rb",
     "not_exists_spec.rb" # test hanlding non exists scenario
   ]
 end

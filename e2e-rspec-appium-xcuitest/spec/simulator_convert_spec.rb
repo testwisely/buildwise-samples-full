@@ -21,8 +21,7 @@ describe "Convert - Simulator" do
     sleep 0.2
     puts("Checking")
     elem_euro_sign = driver.find_element(:name, "€")
-    puts "found elem_euro_sign"
-    
+    puts "found elem_euro_sign"    
     # try Xpath on http://xpather.com/
     elem_euro_amount = driver.find_element(:xpath, "//XCUIElementTypeApplication[@name='iCurrency']//XCUIElementTypeStaticText[@name='€']/following-sibling::XCUIElementTypeStaticText[position()=1]")
     new_euro_amount = elem_euro_amount.text.to_f
