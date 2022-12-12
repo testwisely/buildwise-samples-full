@@ -216,8 +216,8 @@ module TestHelper
         platformName: "ios",
         platformVersion: "16.1",
         deviceName: "iPhone 13",
-        #xcodeSigningId: "489C89LARQ",
-        #xcodeOrgId: "CAJ4TQHVG2",
+        #fullReset: true,
+        noReset: false,
         app: app_path, # install OK
       },
       appium_lib: {

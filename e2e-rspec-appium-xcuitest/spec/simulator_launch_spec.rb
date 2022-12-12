@@ -1,6 +1,6 @@
 load File.dirname(__FILE__) + "/../test_helper.rb"
 
-describe "Set up" do
+describe "Appium Set up" do
   include TestHelper
 
   before(:all) do
@@ -9,15 +9,15 @@ describe "Set up" do
   end
 
   after(:all) do
+    puts "Quit driver"
     @driver.quit
   end
   
-  # WebDriverAgentRunner has conflicting provisioning settings. WebDriverAgentRunner is automatically signed, but code signing identity 489C89LARQ has been manually specified. Set the code signing identity value to "Apple Development" in the build settings editor, or switch to manual signing in the Signing & Capabilities editor.
-
   it "Install and Launch iCurrency on iOS Simulator" do
-    puts "Abbout get name"
+    puts "Abbout get app name"
     application_element = @driver.find_element :class_name, "XCUIElementTypeApplication"
     application_name = application_element.attribute :name
     expect(application_name).to eq("iCurrency")
+    puts "Done"
   end
 end
