@@ -5,3 +5,12 @@
 ant-junit/build/*
 ant-junit/build/target/*
 ant-junit/target/
+ant-junit/.clover/
+ant-junit/.idea/
+api-rspec/api-testing-recipes.tws
+e2e-rspec-appium-xcuitest/e2e-rspec-appium-xcuitest.tws
+e2e-rspec-selenium/agiletravel-selenium-webdriver.tws
+java-spring-boot/
+java-sprint-boot.tar.gz
+load-rspec-selenium/load/flight_spec.rb
+load-rspec-selenium/load_testing.tws
