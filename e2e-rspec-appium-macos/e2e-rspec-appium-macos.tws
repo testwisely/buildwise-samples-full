@@ -1,8 +1,18 @@
 <workspace>
     <opened_files>
-        <entry name="/Users/zhimin/work/projects/buildwise-samples/e2e-rspec-appium-macos/spec/calculator_spec.rb"/>
+        <entry name="/Users/zhimin/work/projects/buildwise-samples/e2e-rspec-appium-macos/spec/add_raw_spec.rb"/>
+        <entry name="/Users/zhimin/work/projects/buildwise-samples/e2e-rspec-appium-macos/spec/add_spec.rb"/>
+        <entry name="/Users/zhimin/work/projects/buildwise-samples/e2e-rspec-appium-macos/spec/subtract_spec.rb"/>
     </opened_files>
     <recent_files>
+        <entry name="/Users/zhimin/work/projects/buildwise-samples/e2e-rspec-appium-macos/spec/subtract_spec.rb"/>
+        <entry name="/Users/zhimin/work/projects/buildwise-samples/e2e-rspec-appium-macos/spec/add_spec.rb"/>
+        <entry name="/Users/zhimin/work/projects/buildwise-samples/e2e-rspec-appium-macos/spec/add_raw_spec.rb"/>
+        <entry name="/Users/zhimin/work/projects/buildwise-samples/e2e-rspec-appium-macos/Rakefile"/>
+        <entry name="/Users/zhimin/work/projects/buildwise-samples/e2e-rspec-appium-macos/pages/main_page.rb"/>
+        <entry name="/Users/zhimin/work/projects/buildwise-samples/e2e-rspec-appium-macos/spec/combination_spec.rb"/>
+        <entry name="/Users/zhimin/work/projects/buildwise-samples/e2e-rspec-appium-macos/spec/spec_helper.rb"/>
+        <entry name="/Users/zhimin/work/projects/buildwise-samples/e2e-rspec-appium-macos/spec/calculator_pom_spec.rb"/>
         <entry name="/Users/zhimin/work/projects/buildwise-samples/e2e-rspec-appium-macos/spec/calculator_spec.rb"/>
     </recent_files>
     <test_suites/>
