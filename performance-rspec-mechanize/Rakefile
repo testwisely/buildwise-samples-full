@@ -32,7 +32,7 @@ def specs_for_quick_build
   [
     "login_spec.rb", 
     "flight_spec.rb",
-    "not_exists_spec.rb" # test hanlding non exists scenario
+    "not_exists_spec.rb" # will exclude non-exists test quietly
   ]
 end
 
