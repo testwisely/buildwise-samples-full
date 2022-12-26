@@ -1,0 +1,57 @@
+<project>
+    <name>untitled</name>
+    <app_type>WebApp</app_type>
+    <default_browser>Chrome</default_browser>
+    <test_framework>Appium</test_framework>
+    <syntax_framework>RSpec</syntax_framework>
+    <environments>
+        <entry name="Test" default="false">
+            <base_url>Microsoft.WindowsCalculator_8wekyb3d8bbwe!App</base_url>
+        </entry>
+    </environments>
+    <exclude_dirs></exclude_dirs>
+    <exclude_files>features\tmp_syntax_check.feature</exclude_files>
+    <spec_template>
+load File.dirname(__FILE__) + '/../test_helper.rb'
+
+describe "{{ TEST_SUITE }}" do
+    include TestHelper
+
+    before(:all) do
+      @driver = $driver =  if Appium::VERSION.to_i &gt;= 12
+        Appium::Driver.new( appium2_opts() ).start_driver
+      else
+        Appium::Driver.new(app_caps, true).start_driver
+      end      
+    end
+
+    after(:all) do
+      driver.quit unless debugging?
+    end
+
+    it "{{ TEST_CASE }}" do
+      # driver.find_element(...)
+      # expect(page_text).to include(..)
+    end
+
+end
+
+</spec_template>
+    <page_template>
+require File.join(File.dirname(__FILE__), "abstract_page.rb")
+
+class {{ PAGE_NAME }} &lt; AbstractWindow
+
+  def initialize(driver)
+    super(driver, "") # &lt;= WIN TITLE
+  end
+
+# page functions here ...
+
+end
+
+</page_template>
+    <integration>
+        <jira url="" username="" password=""/>
+    </integration>
+</project>
