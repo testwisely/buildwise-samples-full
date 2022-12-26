@@ -15,7 +15,7 @@ describe "Calculator on macOS" do
     @driver.quit unless debugging?
   end
 
-  it "Simple digit and subtract" do
+  it "Single digit and subtract" do
     driver.find_element(:name, "four").click
     driver.find_element(:name, "add").click
     driver.find_element(:name, "three").click
