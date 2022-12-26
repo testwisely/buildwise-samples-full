@@ -15,12 +15,12 @@ describe "Calculator on Windows POM" do
     driver.quit unless debugging?
   end
 
-  it "Single digit" do
+  it "Single digit Minus" do
     main_window = MainWindow.new(driver, "Calculator")
     main_window.click_number("Four")
-    main_window.click_plus
+    main_window.click_minus
     main_window.click_number("Three")
     main_window.click_equals
-    expect( main_window.result).to eq("Display is 7")
+    expect( main_window.result).to eq("Display is 1")
   end
 end

@@ -1,11 +1,14 @@
 <project>
-    <name>untitled</name>
+    <name>Appium Windows Samples</name>
     <app_type>WebApp</app_type>
     <default_browser>Chrome</default_browser>
     <test_framework>Appium</test_framework>
     <syntax_framework>RSpec</syntax_framework>
     <environments>
-        <entry name="Test" default="false">
+        <entry name="development" default="false">
+            <base_url>http://localhost</base_url>
+        </entry>
+        <entry name="test" default="true">
             <base_url>Microsoft.WindowsCalculator_8wekyb3d8bbwe!App</base_url>
         </entry>
     </environments>
@@ -42,8 +45,10 @@ require File.join(File.dirname(__FILE__), "abstract_page.rb")
 
 class {{ PAGE_NAME }} &lt; AbstractWindow
 
-  def initialize(driver)
-    super(driver, "") # &lt;= WIN TITLE
+  def initialize(driver, title = "")
+
+    super(driver, title) # &lt;= WIN TITLE
+
   end
 
 # page functions here ...
