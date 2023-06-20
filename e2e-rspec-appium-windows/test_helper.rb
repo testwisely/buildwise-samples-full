@@ -94,7 +94,7 @@ module TestHelper
     the_dir = File.expand_path File.join(File.dirname(__FILE__), "tmp", sub_dir_name)
     the_dir.gsub!("/", "\\") if RUBY_PLATFORM =~ /mingw/
     unless opts[:do_not_create]
-      FileUtils.mkdir_p(the_dir) unless Dir.exists?(the_dir)
+      FileUtils.mkdir_p(the_dir) unless Dir.exist?(the_dir)
     end
     return the_dir
   end

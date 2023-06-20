@@ -60,7 +60,12 @@ module TestHelper
       # the_chrome_options.binary = "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe"
       
       if $TESTWISE_BROWSER_HEADLESS || ENV["BROWSER_HEADLESS"] == "true"
-        the_chrome_options.add_argument("--headless")
+        # the_chrome_options.add_argument("--headless")
+        # 
+        
+        # Between Chrome versions 96 to 108 it was --headless=chrome, after version 109 --headless=new.
+        # reference:   https://www.selenium.dev/blog/2023/headless-is-going-away/
+        the_chrome_options.add_argument("--headless=new")
       end
 
       if defined?(TestWiseRuntimeSupport)

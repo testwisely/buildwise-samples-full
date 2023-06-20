@@ -73,7 +73,7 @@ describe "Edit text in Notepad" do
 
     sleep 1
     save_as_win = @driver.find_element(:name, "Save As")
-    File.delete("C:\\temp\\foo.txt") if File.exists?("C:\\temp\\foo.txt")
+    File.delete("C:\\temp\\foo.txt") if File.exist?("C:\\temp\\foo.txt")
     save_as_win.send_keys("C:\\temp\\foo.txt")
     save_as_win.find_element(:name, "Save").click
   end
