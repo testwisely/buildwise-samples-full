@@ -38,6 +38,7 @@ describe "User Login" do
     visit("/login")
     login_page = LoginPage.new(driver)
     login_page.login("agileway", "badpass")
+    sleep 0.1
     expect(driver.page_source).to include("Invalid email or password")
   end
 end
