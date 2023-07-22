@@ -55,14 +55,14 @@ describe('Flight', function() {
     await flight_page.selectDepartFrom("Sydney")
     await flight_page.selectArriveAt("New York")
     await flight_page.selectDepartDay("02")
-    await flight_page.selectDepartMonth("May 2016")
+    await flight_page.selectDepartMonth("May 2023")
     await flight_page.selectReturnDay("04")
-    await flight_page.selectReturnMonth("June 2016")
+    await flight_page.selectReturnMonth("June 2023")
     await flight_page.clickContinue()
 
     await driver.findElement(By.tagName("body")).getText().then(function(the_page_text) {
-      assert(the_page_text.includes("2016-05-02 Sydney to New York"))
-      assert(the_page_text.includes("2016-06-04 New York to Sydney"))
+      assert(the_page_text.includes("2023-05-02 Sydney to New York"))
+      assert(the_page_text.includes("2023-06-04 New York to Sydney"))
     });
   });
 
@@ -73,11 +73,11 @@ describe('Flight', function() {
     await flight_page.selectDepartFrom("New York")
     await flight_page.selectArriveAt("Sydney")
     await flight_page.selectDepartDay("02")
-    await flight_page.selectDepartMonth("May 2016")
+    await flight_page.selectDepartMonth("May 2023")
     await flight_page.clickContinue()
 
     await driver.findElement(By.tagName("body")).getText().then(function(the_page_text) {
-      assert(the_page_text.includes("2016-05-02 New York to Sydney"))
+      assert(the_page_text.includes("2023-05-02 New York to Sydney"))
     });
   });
 

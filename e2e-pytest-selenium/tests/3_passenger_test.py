@@ -43,7 +43,7 @@ class PassengerTestCase(unittest.TestCase, TestHelper):
     flight_page.select_depart_from("New York")
     flight_page.select_arrive_at("Sydney")
     flight_page.select_depart_day("04")
-    flight_page.select_depart_month("March 2016")
+    flight_page.select_depart_month("March 2023")
     flight_page.click_continue()
 
     time.sleep(1)
