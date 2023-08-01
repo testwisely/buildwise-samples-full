@@ -1,4 +1,9 @@
-# Extract from RWebSpec to use
+
+# ver 1.2 compatiable with Selenium v4.11
+#   the_chrome_options.debugger_address = "127.0.0.1:#{browser_debugging_port}"
+#   the_edge_options.debugger_address = "127.0.0.1:#{browser_debugging_port}"
+ 
+
 module AgilewayUtils
 
   ## for debugging, reuse current browser window and run selected test scripts in it.
@@ -41,7 +46,7 @@ module AgilewayUtils
         end
         puts(" => #{browser_debugging_port}")
 
-        the_edge_options.add_option("debuggerAddress", "127.0.0.1:#{browser_debugging_port}")
+        the_edge_options.debugger_address = "127.0.0.1:#{browser_debugging_port}"
 
         if Selenium::WebDriver::VERSION =~ /^3/
           if defined?(TestwiseListener)
@@ -97,7 +102,10 @@ module AgilewayUtils
           end
         end
 
-        the_chrome_options.add_option("debuggerAddress", "127.0.0.1:#{browser_debugging_port}")
+        # Up to Selenium v4.10, the statement below works
+        # the_chrome_options.add_option("debuggerAddress", "127.0.0.1:#{browser_debugging_port}")
+
+        the_chrome_options.debugger_address = "127.0.0.1:#{browser_debugging_port}"
         @driver = Selenium::WebDriver.for(:chrome, the_browser_options)
         
       end

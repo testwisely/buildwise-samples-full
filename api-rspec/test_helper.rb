@@ -77,7 +77,7 @@ module TestHelper
       the_chrome_options = Selenium::WebDriver::Chrome::Options.new
       # make the same behaviour as Python/JS
       # leave browser open until calls 'driver.quit'
-      the_chrome_options.add_option("detach", true)
+      the_chrome_options.detach = true
       
       # old way
       # prefs = {
