@@ -109,7 +109,7 @@ desc "run simple test with Junit output"
 task "ui_tests:sample:junit" => ["clean", "build"] do
   project_dir = File.expand_path File.dirname(__FILE__)
   FileUtils.chdir(project_dir)
-  cmd = "dotnet test #{dll_file} --filter e2e_vstest_selenium.LoginTest --logger 'junit;LogFilePath=./artifacts/TestResults.xml'"
+  cmd = "dotnet test #{dll_file} --filter e2e_vstest_selenium.LoginTest --logger \"junit;LogFilePath=./artifacts/TestResults.xml\""
   output = `#{cmd}`
   puts output
 end
@@ -171,7 +171,7 @@ RSpec::Core::RakeTask.new("ui_tests:quick") do |t|
   
   specs_to_be_executed = buildwise_determine_specs_for_quick_build(all_test_classes, excluded_spec_files);
   specs_to_be_executed.each do |test_class|    
-    cmd = "dotnet test  #{dll_file}  --filter #{test_class} --logger 'junit;LogFilePath=#{reports_dir}/TestResult-#{test_class}.xml'"
+    cmd = "dotnet test  #{dll_file}  --filter #{test_class} --logger \"junit;LogFilePath=#{reports_dir}/TestResult-#{test_class}.xml\""
 
     # TODO, might be vstest better, but generate trx format, junit need another assembly        
     # cmd = "dotnet vstest ./bin/Debug/net7.0/e2e-vstest-selenium.dll /Tests:#{test_class} /Logger:trx"
