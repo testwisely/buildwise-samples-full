@@ -119,7 +119,7 @@ module TestHelper
         # puts("Chrome debugging port not enabled.")
       end
       
-      return  {  :capabilities =>  the_edge_options }
+      return  {  :options =>  the_edge_options }
     else       
       return {}
     end
