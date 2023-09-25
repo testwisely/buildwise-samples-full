@@ -1,24 +1,26 @@
 from pages.abstract_page import AbstractPage
 
-from selenium import webdriver
-from selenium.webdriver.support.ui import Select
-
 class FlightPage(AbstractPage):
 
   def select_trip_type(self, trip_type):
-    self.driver.find_element_by_xpath("//input[@name='tripType' and @value='" + trip_type + "']").click()
+    elem = self.driver.locator("//input[@name='tripType' and @value='" + trip_type + "']")
+    elem.click()
 
   def select_depart_from(self, from_port):
-    Select(self.driver.find_element_by_name("fromPort")).select_by_visible_text(from_port)
+    select_elem = self.driver.locator("//select[@name='fromPort']")
+    select_elem.select_option(from_port)
 
   def select_arrive_at(self, to_port):
-    Select(self.driver.find_element_by_name("toPort")).select_by_visible_text(to_port)
+    select_elem = self.driver.locator("//select[@name='toPort']")
+    select_elem.select_option(to_port)
 
   def select_depart_day(self, depart_day):
-    Select(self.driver.find_element_by_name("departDay")).select_by_visible_text(depart_day)
+    select_elem = self.driver.locator("//select[@name='departDay']")
+    select_elem.select_option(depart_day)
 
   def select_depart_month(self, depart_month):
-    Select(self.driver.find_element_by_name("departMonth")).select_by_visible_text(depart_month)
+    select_elem = self.driver.locator("#departMonth")
+    select_elem.select_option(depart_month)
 
   def select_return_day(self, return_day):
     Select(self.driver.find_element_by_name("returnDay")).select_by_visible_text(return_day)
@@ -27,4 +29,4 @@ class FlightPage(AbstractPage):
     Select(self.driver.find_element_by_id("returnMonth")).select_by_visible_text(return_month)
 
   def click_continue(self):
-    self.driver.find_element_by_xpath("//input[@value='Continue']").click()
+    self.driver.locator("//input[@value='Continue']").click()

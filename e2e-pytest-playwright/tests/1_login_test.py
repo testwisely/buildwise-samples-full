@@ -34,8 +34,7 @@ class LoginTestCase(unittest.TestCase, TestHelper):
     login_page.enter_username("agileway")
     login_page.enter_password("badpass")
     login_page.click_sign_in()
-    # expect(page.locator("//body")).to_have_text("Invalid email or password")
-    # self.assertIn("Demo Fail this test case", self.driver.find_element_by_tag_name("body").text)
+    assert "Invalid email or password" in self.page.content();
 
   def test_sign_in_ok(self):
     # self.page.goto("https://travel.agileway.net")
@@ -43,7 +42,7 @@ class LoginTestCase(unittest.TestCase, TestHelper):
     login_page.enter_username("agileway")
     login_page.enter_password("testwise")
     login_page.click_sign_in()
-    print("Test 2")
+    assert self.page.text_content("div#flash_notice") == "Signed in!"
 
 # if __name__ == '__main__':
 #     unittest.main(

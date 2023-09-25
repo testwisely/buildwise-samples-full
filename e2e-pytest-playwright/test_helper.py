@@ -8,11 +8,7 @@ import codecs;
 
 import sqlite3;
 
-from selenium import webdriver
-from selenium.webdriver.remote.webdriver import WebDriver
-from selenium.webdriver.support.ui import Select
-from selenium.webdriver.common.by import By
-from selenium.webdriver.support.ui import WebDriverWait
+from playwright.sync_api import Playwright, sync_playwright, expect
 
 #sys.path.insert(0, '../pages')
 #from login_page import LoginPage
@@ -28,12 +24,10 @@ class TestHelper:
       cls.driver = webdriver.Firefox()
     elif env_browser == "safari":
       cls.driver = webdriver.Safari()
-    elif env_browser == "ie":
-      cls.driver = webdriver.Ie()
     elif env_browser == "edge":
       cls.driver = webdriver.Edge()
     else:
-      cls.driver = webdriver.Chrome(options = cls.browser_chrome_options())
+      cls.browser = playwright.chromium.launch(headless=False)
     
     # save driver session for later to attach it, for much easier debugging test steps
     cls.save_driver_session()
