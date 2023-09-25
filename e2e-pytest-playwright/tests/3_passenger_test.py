@@ -4,11 +4,9 @@ import time
 import datetime
 import sys
 import os
-from selenium import webdriver
-from selenium.webdriver.support.ui import Select
-from selenium.webdriver.common.by import By
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
+
+from playwright.sync_api import Page, expect
+import pytest
 
 sys.path.insert(0, os.path.dirname(os.path.realpath(__file__)) + "/../")
 from test_helper import TestHelper
@@ -22,20 +20,29 @@ class PassengerTestCase(unittest.TestCase, TestHelper):
   @classmethod
   def setUpClass(cls):
     # open_browser method defined in test_helper.py
-    cls.driver = cls.open_browser();
-    cls.driver.set_window_size(1280, 720)
-    cls.driver.set_window_position(30, 78)
+    # cls.driver = cls.open_browser();
+    # cls.driver.set_window_size(1280, 720)
+    # cls.driver.set_window_position(30, 78)
 
-    cls.driver.get(cls.site_url())
-    login_page = LoginPage(cls.driver)
-    login_page.enter_username("agileway")
-    login_page.enter_password("testwise")
-    login_page.click_sign_in()
+    # cls.driver.get(cls.site_url())
+    # login_page = LoginPage(cls.driver)
+    # login_page.enter_username("agileway")
+    # login_page.enter_password("testwise")
+    # login_page.click_sign_in()
+    print("cls setup is not good yet")
 
   @classmethod
   def tearDownClass(cls):
     time.sleep(1)
-    cls.driver.quit()
+
+  @pytest.fixture(autouse=True)
+  def setup(self, page: Page):
+    self.driver = page
+    self.driver.goto(self.site_url())
+    login_page = LoginPage(self.driver)
+    login_page.enter_username("agileway")
+    login_page.enter_password("testwise")
+    login_page.click_sign_in()
 
   def test_enter_passenger_details(self):
     flight_page = FlightPage(self.driver)
@@ -53,7 +60,7 @@ class PassengerTestCase(unittest.TestCase, TestHelper):
     passenger_page.click_next()
 
     # purposely assertion failure
-    self.assertEqual("Wendy Tester", self.driver.find_element_by_name("holder_name").get_attribute("value"))
+    self.assertEqual("Wendy Tester", self.driver.locator("//input[@name='holder_name']").get_attribute("value"))
 
 # if __name__ == '__main__':
 #     unittest.main(

@@ -36,15 +36,15 @@ class FlightTestCase(unittest.TestCase, TestHelper):
 
   @pytest.fixture(autouse=True)
   def setup(self, page: Page):
-    self.page = page
-    self.page.goto(self.site_url())
-    login_page = LoginPage(self.page)
+    self.driver = page
+    self.driver.goto(self.site_url())
+    login_page = LoginPage(self.driver)
     login_page.enter_username("agileway")
     login_page.enter_password("testwise")
     login_page.click_sign_in()
 
   def test_oneway_flight(self):
-    flight_page = FlightPage(self.page)
+    flight_page = FlightPage(self.driver)
     flight_page.select_trip_type("oneway")
     flight_page.select_depart_from("Sydney")
     flight_page.select_arrive_at("New York")
