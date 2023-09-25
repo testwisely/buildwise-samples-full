@@ -69,9 +69,9 @@ class PaymentTestCase(unittest.TestCase, TestHelper):
     payment_page.enter_expiry_month("04")
     payment_page.enter_expiry_year("2016")
     payment_page.click_pay_now()
-
-    self.wait_for_ajax_complete(10)
-    self.assertIn("Booking number", self.driver.page_source)
+    
+    time.sleep(10)
+    self.assertIn("Booking number", self.driver.content())
 
 
 # if __name__ == '__main__':
