@@ -8,6 +8,14 @@
         <entry name="/Users/zhimin/work/projects/buildwise-samples/e2e-pytest-playwright/pages/login_page.py"/>
         <entry name="/Users/zhimin/work/projects/buildwise-samples/e2e-pytest-playwright/pages/flight_page.py"/>
         <entry name="/Users/zhimin/work/projects/buildwise-samples/e2e-pytest-playwright/tests/1_login_test.py"/>
+        <entry name="/Users/zhimin/work/projects/buildwise-samples/e2e-pytest-playwright/tests/0_login_test.py"/>
+        <entry name="/Users/zhimin/work/projects/buildwise-samples/e2e-pytest-playwright/install-lib.cmd"/>
+        <entry name="/Users/zhimin/work/projects/buildwise-samples/e2e-pytest-playwright/tests/3_passenger_test.py"/>
+        <entry name="/Users/zhimin/work/projects/buildwise-samples/e2e-pytest-playwright/pages/payment_page.py"/>
+        <entry name="/Users/zhimin/work/projects/buildwise-samples/e2e-pytest-playwright/pages/__init__.py"/>
+        <entry name="/Users/zhimin/work/projects/buildwise-samples/e2e-pytest-playwright/tests/4_payment_test.py"/>
+        <entry name="/Users/zhimin/work/projects/buildwise-samples/e2e-pytest-playwright/pages/abstract_page.py"/>
+        <entry name="/Users/zhimin/work/projects/buildwise-samples/e2e-pytest-playwright/tests/2_flight_test.py"/>
         <entry name="/Users/zhimin/work/projects/agiletravel-ui-tests/selenium-webdriver-python-unittest/tests/2_flight_test.py"/>
         <entry name="/Users/zhimin/work/projects/agiletravel-ui-tests/selenium-webdriver-python-unittest/pages/flight_page.py"/>
         <entry name="/Users/zhimin/work/projects/agiletravel-ui-tests/selenium-webdriver-python-unittest/pages/login_page.py"/>
