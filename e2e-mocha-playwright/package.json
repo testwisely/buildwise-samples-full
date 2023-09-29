@@ -1,0 +1,11 @@
+{
+  "name": "playright-mocha",
+  "version": "1.0.0",
+  "description": "Sample tests for Playwright",
+  "author": "Zhimin Zhan",
+  "license": "ISC",
+  "dependencies": {
+    "mocha": "^10.0",
+    "playwright": "^1.38.1"
+  }
+}

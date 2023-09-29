@@ -3,12 +3,17 @@
         <entry name="/Users/zhimin/work/projects/buildwise-samples/e2e-pytest-playwright/tests/1_login_test.py"/>
         <entry name="/Users/zhimin/work/projects/buildwise-samples/e2e-pytest-playwright/pages/flight_page.py"/>
         <entry name="/Users/zhimin/work/projects/buildwise-samples/e2e-pytest-playwright/pages/login_page.py"/>
+        <entry name="/Users/zhimin/work/projects/buildwise-samples/e2e-pytest-playwright/tests/0_login_test.py"/>
+        <entry name="/Users/zhimin/work/projects/buildwise-samples/e2e-pytest-playwright/tests/sample.py"/>
+        <entry name="/Users/zhimin/work/projects/buildwise-samples/e2e-pytest-playwright/test_helper.py"/>
     </opened_files>
     <recent_files>
+        <entry name="/Users/zhimin/work/projects/buildwise-samples/e2e-pytest-playwright/test_helper.py"/>
+        <entry name="/Users/zhimin/work/projects/buildwise-samples/e2e-pytest-playwright/tests/sample.py"/>
+        <entry name="/Users/zhimin/work/projects/buildwise-samples/e2e-pytest-playwright/tests/0_login_test.py"/>
         <entry name="/Users/zhimin/work/projects/buildwise-samples/e2e-pytest-playwright/pages/login_page.py"/>
         <entry name="/Users/zhimin/work/projects/buildwise-samples/e2e-pytest-playwright/pages/flight_page.py"/>
         <entry name="/Users/zhimin/work/projects/buildwise-samples/e2e-pytest-playwright/tests/1_login_test.py"/>
-        <entry name="/Users/zhimin/work/projects/buildwise-samples/e2e-pytest-playwright/tests/0_login_test.py"/>
         <entry name="/Users/zhimin/work/projects/buildwise-samples/e2e-pytest-playwright/install-lib.cmd"/>
         <entry name="/Users/zhimin/work/projects/buildwise-samples/e2e-pytest-playwright/tests/3_passenger_test.py"/>
         <entry name="/Users/zhimin/work/projects/buildwise-samples/e2e-pytest-playwright/pages/payment_page.py"/>

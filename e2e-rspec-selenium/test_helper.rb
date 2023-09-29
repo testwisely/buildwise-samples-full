@@ -167,4 +167,12 @@ module TestHelper
     duration = 2000 if duration < 100 || duration > 60000
     driver.execute_script("h = arguments[0]; h.style.backgroundColor='#{background_color}'; window.setTimeout(function () { h.style.backgroundColor = ''}, #{duration})", element)  
   end
+  
+  
+  def login(username, password)
+    driver.find_element(:id, "username").send_keys(username)
+    driver.find_element(:id, "password").send_keys(password)
+    driver.find_element(:name, "commit").click
+  end
+  
 end
