@@ -9,9 +9,8 @@ test.describe.configure({ mode: 'serial' });
 let driver: Page;
 
 test.beforeAll(async ({ browser }) => {
-  // Create page once and sign in.
+  // Create page once.
   driver = await browser.newPage();
-  await driver.goto('https://travel.agileway.net');
 });
 
 test.afterAll(async () => {
@@ -37,6 +36,8 @@ test('Sign in failed', async () => {
   await driver.fill("#username", "agileway");
   await driver.fill("#password", "badpass");
   await driver.click("input:has-text('Sign in')");
-  const flashText = await driver.textContent("#flash_alert")
-  expect(flashText).toEqual('Invalid email or password');
+  // const flashText = await driver.textContent("#flash_alert")
+  // expect(flashText).toEqual('Invalid email or password');
+	await expect(driver.locator("#flash_alert")).toHaveText('Invalid email or password');
+	
 });
