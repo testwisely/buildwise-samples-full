@@ -1,4 +1,3 @@
-const {  test, expect } = require('@playwright/test');
 const { chromium } = require('playwright');
 var path = require("path");
 var assert = require('assert');
