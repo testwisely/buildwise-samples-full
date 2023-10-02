@@ -1,3 +1,4 @@
+const { chromium } = require('playwright');
 import { test, expect } from '@playwright/test';
 
 // TODO, currently every test starts a new browser
