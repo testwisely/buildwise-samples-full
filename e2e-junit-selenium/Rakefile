@@ -124,6 +124,7 @@ RSpec::Core::RakeTask.new("ui_tests:quick") do |t|
   all_test_classes = get_test_classes_list  
   
   specs_to_be_executed = buildwise_determine_specs_for_quick_build(all_test_classes, excluded_spec_files);
+  FileUtils.chdir(File.expand_path(File.dirname(__FILE__)));
   specs_to_be_executed.each do |test_class|    
     cmd = "ant runTest -DTestName=#{test_class}"
     puts cmd
