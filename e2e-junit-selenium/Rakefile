@@ -35,18 +35,10 @@ def get_test_classes_list
   return qualified_class_names
 end
 
-
-# NOTE
-#  Change to yours here
-def dll_file
-  "./bin/Debug/net7.0/e2e-vstest-selenium.dll"
-end
-
-
 # List tests you want to exclude
 #
 def excluded_spec_files
-  # NOTE, testing only for faster develping agent, remove a couple of test later
+  # NOTE, testing only for faster developing agent, remove a couple of tests later
   []
 end
 
@@ -104,7 +96,7 @@ task "ui_tests:list" => ["build"] do
   puts test_classes.inspect
 end
 
-desc "run all tests in the DLL in one process. Problems: after_all is not invoked immeddately, annoying"
+desc "run all tests in the DLL in one process. Problems: after_all is not invoked immediately, annoying"
 task "ui_tests:all" => ["build"] do
   project_dir = File.expand_path File.dirname(__FILE__)
   FileUtils.chdir(project_dir)
