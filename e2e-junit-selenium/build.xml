@@ -78,10 +78,11 @@
     <target name="runTest"  depends="compile" description="run command-line example">
         <junit failureProperty="test.failure" errorProperty="test.error"  printsummary="yes"  showoutput="true" >
           <classpath refid="classpath"/>			  
-          <test name="${TestName}" haltonfailure="no" outfile="result">
+          <test name="${TestName}" haltonfailure="no" todir="${result.dir.path}">
+            <!--  outfile="result" -->
 			    <formatter type="xml"/>
 			  </test>
-		</junit>
+		  </junit>
     </target>
     
     <target name="verifyNoError" if="test.error">
