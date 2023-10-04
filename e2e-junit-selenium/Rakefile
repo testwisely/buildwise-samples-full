@@ -87,6 +87,17 @@ task "ui_tests:sample" => ["build"] do
   puts output
 end
 
+
+desc "run simple test with Junit output"
+task "ui_tests:sample:junit" => ["clean", "build"] do
+  project_dir = File.expand_path File.dirname(__FILE__)
+  FileUtils.chdir(project_dir)
+  cmd = "dotnet test #{dll_file} --filter e2e_vstest_selenium.LoginTest --logger \"junit;LogFilePath=./artifacts/TestResults.xml\""
+  output = `#{cmd}`
+  puts output
+end
+
+
 desc "list all test classes under build/classes"
 task "ui_tests:list" => ["build"] do
   test_classes = get_test_classes_list
@@ -102,15 +113,6 @@ task "ui_tests:all" => ["build"] do
   puts output
 end
 
-
-desc "run simple test with Junit output"
-task "ui_tests:sample:junit" => ["clean", "build"] do
-  project_dir = File.expand_path File.dirname(__FILE__)
-  FileUtils.chdir(project_dir)
-  cmd = "dotnet test #{dll_file} --filter e2e_vstest_selenium.LoginTest --logger \"junit;LogFilePath=./artifacts/TestResults.xml\""
-  output = `#{cmd}`
-  puts output
-end
 
 
 

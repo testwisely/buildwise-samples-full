@@ -15,8 +15,8 @@
     <property name="build.dir" value="build"/>
     <property name="classes.dir" value="${build.dir}/classes"/>
     <property name="lib.dir" value="lib"/>
-    <property name="result.dir" value="tmp/result"/>
-    <property name="report.dir" value="tmp/report"/>
+    <property name="result.dir" value="reports"/>
+    <!-- <property name="report.dir" value="reports"/> -->
 
     <path id="classpath">
         <!-- <fileset dir="${lib.dir}/selenium-java-4.13.0" includes="**/*.jar"/> -->
@@ -28,6 +28,7 @@
 
     <target name="clean">
         <delete dir="${build.dir}"/>
+        <delete dir="${result.dir}"/>
     </target>
 
     <target name="compile">
@@ -41,7 +42,6 @@
     <target name="runAll" depends="compile">
 		<mkdir dir="tmp"/>
 		<mkdir dir="${result.dir}"/>
-		<mkdir dir="${report.dir}"/>
 		
         <junit fork="yes" haltonfailure="no"  failureProperty="test.failure" errorProperty="test.error" >
 
@@ -59,11 +59,11 @@
             </batchtest>
 				  
         </junit>
-
-		<junitreport todir="tmp">
+        
+        <!-- <junitreport todir="tmp">
           <fileset dir="${result.dir}" />
           <report todir="${report.dir}" />
-        </junitreport>
+        </junitreport> -->
 
     </target>
     
@@ -72,7 +72,7 @@
 		 ant runTest -DTestName=tests.LoginTest
 	-->
     <target name="runTest"  depends="compile" description="run command-line example">
-        <junit failureProperty="test.failure" errorProperty="test.error"  printsummary="yes" haltonfailure="yes">
+        <junit failureProperty="test.failure" errorProperty="test.error"  printsummary="yes"  showoutput="true" >
           <classpath refid="classpath"/>			  
           <test name="${TestName}" haltonfailure="no" outfile="result">
 			    <formatter type="xml"/>
