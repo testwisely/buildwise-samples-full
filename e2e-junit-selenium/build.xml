@@ -60,6 +60,8 @@
 				  
         </junit>
         
+        <echo message="Test results (xml files) shall be in ${result.dir} "/>
+        
         <!-- <junitreport todir="tmp">
           <fileset dir="${result.dir}" />
           <report todir="${report.dir}" />
