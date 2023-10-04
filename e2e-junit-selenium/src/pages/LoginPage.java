@@ -3,7 +3,7 @@ package pages;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
-public class LoginPage < AbstractPage {
+public class LoginPage extends AbstractPage {
 
     public LoginPage(WebDriver aDriver) {
         super(aDriver);
