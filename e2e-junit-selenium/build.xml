@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- You may freely edit this file. See commented blocks below for -->
+<!-- some examples of how to customize the build. -->
+<!-- (If you delete it and reopen the project it will be recreated.) -->
+<!-- By default, only the Clean and Build commands use this build script. -->
+<!-- Commands such as Run, Debug, and Test only use this build script if -->
+<!-- the Compile on Save feature is turned off for the project. -->
+<!-- You can turn off the Compile on Save (or Deploy on Save) setting -->
+<!-- in the project's Project Properties dialog box.-->
+<project name="sample-junit-selenium" default="default" basedir=".">
+    <description>Builds, tests, and runs the project recipes.</description>
+	
+    <property name="test.dir" value="src"/>
+	
+    <property name="build.dir" value="build"/>
+    <property name="classes.dir" value="${build.dir}/classes"/>
+    <property name="lib.dir" value="lib"/>
+    <property name="result.dir" value="tmp/result"/>
+    <property name="report.dir" value="tmp/report"/>
+
+    <path id="classpath">
+        <!-- <fileset dir="${lib.dir}/selenium-java-4.13.0" includes="**/*.jar"/> -->
+        <fileset dir="${lib.dir}/selenium-dependent" includes="*.jar"/>
+        <fileset dir="${lib.dir}/selenium-java-4.13.0" includes="*.jar"/>
+        <fileset dir="${lib.dir}/junit4" includes="*.jar"/>
+        <pathelement location="${classes.dir}" />
+    </path>
+
+    <target name="clean">
+        <delete dir="${build.dir}"/>
+    </target>
+
+    <target name="compile">
+        <mkdir dir="${classes.dir}"/>
+        <javac srcdir="${test.dir}" encoding="UTF-8" destdir="${classes.dir}" includeantruntime="false" classpathref="classpath"/>
+    </target>
+
+    <target name="main" depends="clean,runAll"/>
+
+	<!-- Run all tests -->
+    <target name="runAll" depends="compile">
+		<mkdir dir="tmp"/>
+		<mkdir dir="${result.dir}"/>
+		<mkdir dir="${report.dir}"/>
+		
+        <junit fork="yes" haltonfailure="no"  failureProperty="test.failure" errorProperty="test.error" >
+
+            <!-- <sysproperty key="browser.name" value="Chrome"/> -->
+            <!-- <sysproperty key="browser.platform" value="Linux"/> -->
+            <sysproperty key="browser.version" value=""/>
+
+            <formatter type="xml" usefile="true"/>
+            <classpath refid="classpath"/>
+            <batchtest fork="yes" todir="${result.dir}">
+                <fileset dir="${test.dir}">
+                    <include name="**/*Test.java"/>
+                    <exclude name="**/TestHelper.java"/>
+                </fileset>
+            </batchtest>
+				  
+        </junit>
+
+		<junitreport todir="tmp">
+          <fileset dir="${result.dir}" />
+          <report todir="${report.dir}" />
+        </junitreport>
+
+    </target>
+    
+    
+    <!-- Run individual test by supplying full class name with package 
+		 ant runTest -DTestName=tests.LoginTest
+	-->
+    <target name="runTest"  depends="compile" description="run command-line example">
+        <junit failureProperty="test.failure" errorProperty="test.error"  printsummary="yes" haltonfailure="yes">
+          <classpath refid="classpath"/>			  
+          <test name="${TestName}" haltonfailure="no" outfile="result">
+			    <formatter type="xml"/>
+			  </test>
+		</junit>
+    </target>
+    
+    <target name="verifyNoError" if="test.error">
+        <echo message="Opps, Therea are errors (exceptions) occurred!"/>
+        <fail message="JUnit tests errors."/>
+    </target>
+
+    <target name="verifyNoFailure" if="test.failure">
+        <echo message="There are test failures."/>
+        <fail message="JUnit tests failed."/>
+    </target>
+    
+    <target name="go" depends="clean, compile, runAll, verifyNoError, verifyNoFailure"/>
+    
+    <target name="default" depends="go"/>
+    
+</project>

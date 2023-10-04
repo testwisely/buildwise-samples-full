@@ -16,3 +16,6 @@ load-rspec-selenium/load/flight_spec.rb
 load-rspec-selenium/load_testing.tws
 e2e-vstest-selenium/bin
 e2e-vstest-selenium/obj
+e2e-mocha-playwright/node_modules
+node_modules
+
