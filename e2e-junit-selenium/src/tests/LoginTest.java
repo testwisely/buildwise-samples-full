@@ -28,7 +28,7 @@ public class LoginTest {
         loginPage.enterUsername("agileway");
         loginPage.enterPassword("guess");
         loginPage.clickSignIn();
-        Assert.assertEquals("Invalid email or password", driver.findElement(By.id("flash_alert2")).getText() ); 
+        Assert.assertEquals("Invalid email or password", driver.findElement(By.id("flash_alert")).getText() ); 
     }
 
     @Test
