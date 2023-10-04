@@ -16,6 +16,8 @@
     <property name="classes.dir" value="${build.dir}/classes"/>
     <property name="lib.dir" value="lib"/>
     <property name="result.dir" value="reports"/>
+    <property name="result.dir.path" location="${result.dir}"/> <!-- converted to absolute path -->
+    
     <!-- <property name="report.dir" value="reports"/> -->
 
     <path id="classpath">
@@ -51,7 +53,7 @@
 
             <formatter type="xml" usefile="true"/>
             <classpath refid="classpath"/>
-            <batchtest fork="yes" todir="${result.dir}">
+            <batchtest fork="yes" todir="${result.dir.path}">
                 <fileset dir="${test.dir}">
                     <include name="**/*Test.java"/>
                     <exclude name="**/TestHelper.java"/>
@@ -60,7 +62,7 @@
 				  
         </junit>
         
-        <echo message="Test results (xml files) shall be in ${result.dir} "/>
+        <echo message="Test results (xml files) shall be in ${result.dir.path} "/>
         
         <!-- <junitreport todir="tmp">
           <fileset dir="${result.dir}" />
