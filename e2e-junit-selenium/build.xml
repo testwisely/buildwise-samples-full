@@ -21,10 +21,13 @@
     <!-- <property name="report.dir" value="reports"/> -->
 
     <path id="classpath">
-        <!-- <fileset dir="${lib.dir}/selenium-java-4.13.0" includes="**/*.jar"/> -->
+        <!-- 
+					Recommend JUnit 4 over 5, just one jar file and easier with Ant
+					Note: if you do use JUnit5 and experience test results missing on BuildWise, search 'junit4' the build.rb file, and switch to use junit5
+			  -->
+ 	      <fileset dir="${lib.dir}/junit4" includes="*.jar"/>
         <fileset dir="${lib.dir}/selenium-dependent" includes="*.jar"/>
         <fileset dir="${lib.dir}/selenium-java-4.13.0" includes="*.jar"/>
-        <fileset dir="${lib.dir}/junit4" includes="*.jar"/>
         <pathelement location="${classes.dir}" />
     </path>
 
