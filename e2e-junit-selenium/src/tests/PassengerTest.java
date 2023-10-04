@@ -9,7 +9,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import helper.TestHelper;
 import pages.*;
 
-public class FlightTest {
+public class PassengerTest {
     static WebDriver driver;
 
     @BeforeClass
@@ -21,6 +21,13 @@ public class FlightTest {
         loginPage.enterUsername("agileway");
         loginPage.enterPassword("testwise");
         loginPage.clickSignIn();
+
+        FlightPage flightPage = new FlightPage(driver);
+		flightPage.selectTripType("oneway");
+        flightPage.selectDepartFrom("New York");
+        flightPage.selectArriveAt("Sydney");
+        flightPage.selectDepartMonth("March 2023");
+        flightPage.clickContinue();
     }
 
     @AfterClass
@@ -34,25 +41,11 @@ public class FlightTest {
     }
 
     @Test
-    public void testOneWayTrip() {
-        FlightPage flightPage = new FlightPage(driver);
-		flightPage.selectTripType("oneway");
-        flightPage.selectDepartFrom("New York");
-        flightPage.selectArriveAt("Sydney");
-        flightPage.selectDepartMonth("March 2023");
-        flightPage.clickContinue();
-        
-    }
-
-    @Test
-    public void testReturnTrip() {
-        FlightPage flightPage = new FlightPage(driver);
-		flightPage.selectTripType("return");
-        flightPage.selectDepartFrom("New York");
-        flightPage.selectArriveAt("Sydney");
-        flightPage.selectDepartMonth("March 2023");
-        flightPage.selectReturnMonth("April 2023");
-        flightPage.clickContinue();
+    public void testEnterPassengerDetails() {
+       PassengerPage passengerPage =  new PassengerPage(driver);
+       passengerPage.enterFirstName("Bob");
+       passengerPage.enterLastName("Tester");
+       passengerPage.clickNext();     
     }
 
 
