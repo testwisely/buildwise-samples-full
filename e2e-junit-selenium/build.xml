@@ -98,8 +98,10 @@
         <fail message="JUnit tests failed."/>
     </target>
     
-    <target name="go" depends="clean, compile, runAll, verifyNoError, verifyNoFailure"/>
-    
-    <target name="default" depends="go"/>
+    <!-- execute tests -->
+    <target name="go" depends="runAll, verifyNoError, verifyNoFailure"/>
+     
+		<!-- all -->
+    <target name="default" depends="cleanm compile, go"/>
     
 </project>
