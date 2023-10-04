@@ -31,5 +31,13 @@ public class TestHelper {
             throw new RuntimeException("Your OS is not support!!");
         }
     }
+
+    public static void sleep(double seconds) {
+        try {
+            Thread.sleep((int) seconds * 1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
     
 }

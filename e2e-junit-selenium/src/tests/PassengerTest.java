@@ -37,7 +37,6 @@ public class PassengerTest {
 
     @Before
     public void beforeEach() {
-        driver.get(TestHelper.siteUrl());
     }
 
     @Test

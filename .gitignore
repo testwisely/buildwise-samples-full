@@ -18,4 +18,7 @@ e2e-vstest-selenium/bin
 e2e-vstest-selenium/obj
 e2e-mocha-playwright/node_modules
 node_modules
-
+e2e-junit-selenium/build/
+e2e-junit-selenium/reports/
+e2e-junit-selenium/tmp/
+e2e-rspec-selenium/spec/debugging_spec.rb
