@@ -102,6 +102,6 @@
     <target name="go" depends="runAll, verifyNoError, verifyNoFailure"/>
      
 		<!-- all -->
-    <target name="default" depends="cleanm compile, go"/>
+    <target name="default" depends="clean, compile, go"/>
     
 </project>
