@@ -41,17 +41,17 @@ task "ui_tests:quick"  do
   # system("nosetests --with-xunit --xunit-file=reports/TEST-SUITE.xml test")
 
   # Running with pyTest
-  system("pytest --junit-xml=reports/TEST-SUITE.xml test")
+  system("pytest --junit-xml=reports/TEST-SUITE.xml tests")
 end
 
 
 def specs_for_quick_build
   # list test files to be run in a quick build
   [
-    "1_login_test.py", 
-    "2_flight_test.py",
-    "3_passenger_test.py", 
-    "4_payment_test.py",
+    "login_test.py", 
+    "flight_test.py",
+    "passenger_test.py", 
+    "payment_test.py",
     "not_exists_test.py"
   ]
 end
