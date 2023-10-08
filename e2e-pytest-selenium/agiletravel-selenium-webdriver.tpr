@@ -44,28 +44,29 @@ from test_helper import TestHelper
 
 class {{ TestSuite }}TestCase(unittest.TestCase, TestHelper):
 
-    @classmethod
-    def setUpClass(cls):
-        # open_browser method defined in test_helper.py
-        cls.driver = cls.open_browser();  
-        cls.driver.set_window_size(1280, 720)
+  @classmethod
+  def setUpClass(cls):
+    # open_browser method defined in test_helper.py
+    cls.driver = cls.open_browser();  
+    cls.driver.set_window_size(1280, 720)
 
-    @classmethod
-    def tearDownClass(cls):
-        if not cls.is_debugging():
-            cls.driver.quit()
+  @classmethod
+  def tearDownClass(cls):
+    if not cls.is_debugging():
+      cls.driver.quit()
 
+  def setUp(self):
+    self.driver.get(self.site_url())
 
-    def setUp(self):
-        self.driver.get(self.site_url())
-
-    def test_{{ test_case }}(self):
-        print("Add test statements here ...")</spec_template>
+  def test_{{ test_case }}(self):
+    print("Add test statements here ...")
+    </spec_template>
     <page_template>from abstract_page import AbstractPage
 
 class {{ PAGE_NAME }}(AbstractPage):
   
-  # define your page methods here ...</page_template>
+  # define your page methods here ...
+    </page_template>
     <integration>
         <jira url="" username="" password=""/>
     </integration>
