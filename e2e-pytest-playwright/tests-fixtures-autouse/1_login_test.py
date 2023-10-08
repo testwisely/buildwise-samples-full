@@ -22,7 +22,7 @@ class LoginTestCase(unittest.TestCase, TestHelper):
 
   @pytest.fixture(autouse=True)
   def setup(self, page: Page):
-    self.driver = page
+    self.driver = self.page =  page
     self.driver.goto(self.site_url())
         
   def test_sign_in_failed(self):
@@ -37,4 +37,4 @@ class LoginTestCase(unittest.TestCase, TestHelper):
     login_page.enter_username("agileway")
     login_page.enter_password("testwise")
     login_page.click_sign_in()
-    assert self.page.text_content("div#flash_notice") == "Signed in!"
+    assert self.driver.text_content("div#flash_notice") == "Signed in!"

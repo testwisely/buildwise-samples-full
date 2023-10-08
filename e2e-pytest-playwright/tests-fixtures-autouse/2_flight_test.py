@@ -4,18 +4,17 @@ import time
 import datetime
 import sys
 import os
+import pytest
 
 from playwright.sync_api import Page, expect
-import pytest
 
 sys.path.insert(0, os.path.dirname(os.path.realpath(__file__)) + "/../")
 from test_helper import TestHelper
 
 from pages.login_page import LoginPage
 from pages.flight_page import FlightPage
-from pages.passenger_page import PassengerPage
 
-class PassengerTestCase(unittest.TestCase, TestHelper):
+class FlightTestCase(unittest.TestCase, TestHelper):
 
   @classmethod
   def setUpClass(cls):
@@ -44,24 +43,29 @@ class PassengerTestCase(unittest.TestCase, TestHelper):
     login_page.enter_password("testwise")
     login_page.click_sign_in()
 
-  def test_enter_passenger_details(self):
+  def test_oneway_flight(self):
     flight_page = FlightPage(self.driver)
     flight_page.select_trip_type("oneway")
-    flight_page.select_depart_from("New York")
-    flight_page.select_arrive_at("Sydney")
-    flight_page.select_depart_day("04")
-    flight_page.select_depart_month("March 2023")
+    flight_page.select_depart_from("Sydney")
+    flight_page.select_arrive_at("New York")
+
+    flight_page.select_depart_day("02")
+    flight_page.select_depart_month("May 2024")
     flight_page.click_continue()
-
     time.sleep(1)
-    passenger_page = PassengerPage(self.driver)
-    passenger_page.enter_first_name("Bob")
-    passenger_page.enter_last_name("Tester")
-    passenger_page.click_next()
 
-    # purposely assertion failure
-    self.assertEqual("Wendy Tester", self.driver.locator("//input[@name='holder_name']").get_attribute("value"))
 
+  def test_return_flight(self):
+    flight_page = FlightPage(self.driver)
+    flight_page.select_trip_type("return")
+    flight_page.select_depart_from("Sydney")
+    flight_page.select_arrive_at("New York")
+
+    flight_page.select_depart_day("02")
+    flight_page.select_depart_month("May 2024")
+    flight_page.click_continue()
+    time.sleep(1)
+    
 # if __name__ == '__main__':
 #     unittest.main(
 #         testRunner=xmlrunner.XMLTestRunner(output='reports'),
