@@ -52,8 +52,8 @@ class PassengerTestCase(unittest.TestCase, TestHelper):
     passenger_page.enter_last_name("Tester")
     passenger_page.click_next()
 
-    # purposely assertion failure
-    self.assertEqual("Wendy Tester", self.driver.find_element_by_name("holder_name").get_attribute("value"))
+    # purposely assertion failure if Wendy
+    self.assertEqual("Bob Tester", self.driver.find_element_by_name("holder_name").get_attribute("value"))
 
 # if __name__ == '__main__':
 #     unittest.main(
