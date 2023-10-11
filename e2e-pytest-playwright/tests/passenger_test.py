@@ -44,6 +44,6 @@ def test_enter_passenger_details(page: Page):
 
     # purposely assertion failure, if set
     holder_name = page.locator("//input[@name='holder_name']").get_attribute("value")
-    assert "Wendy Tester" ==  holder_name
+    assert "Bob Tester" ==  holder_name
 
 
