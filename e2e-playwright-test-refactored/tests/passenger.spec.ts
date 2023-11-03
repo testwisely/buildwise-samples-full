@@ -43,7 +43,7 @@ test.afterEach(async () => {
 
 
 
-test('One-way trip', async () => {
+test('Enter passenger details', async () => {
   
   let flight_page = new FlightPage(page);
   await flight_page.selectTripType("oneway")
@@ -55,7 +55,17 @@ test('One-way trip', async () => {
   
   // await helper.sleep(60); // willl get  Test timeout of 30000ms exceeded
   await helper.sleep(0.5)
-  await expect(page).toHaveText("2023-05-02  Sydney to New York")
+  // await expect(page).toHaveText("2023-05-02  Sydney to New York")
+  
+  let passenger_page = new FlightPage(page);
+  await page.locator("[name=passengerFirstName]").fill("Bob")
+  await page.locator("[name=passengerLastName]").fill("Builder")
+  await page.click("input:has-text('Next')")
+  
+  await helper.sleep(5)
+  const inputElement = page.locator("[name=holder_name]");
+  const passengerName = await inputElement.getAttribute('value');
+  expect(passengerName).toEqual("Bob Builder")  
   
 /*
   await driver.textContent("body").then(function(body_text) {
