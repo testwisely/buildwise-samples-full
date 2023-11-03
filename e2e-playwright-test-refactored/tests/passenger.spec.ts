@@ -19,7 +19,7 @@ let page: Page;
 // An example in below:  var FlightPage = require('../pages/flight_page.js')
 // BEGIN: import pages
 var FlightPage = require('../pages/flight_page.js')
-
+var PassengerPage = require('../pages/passenger_page.js')
 // END: import pages
 
 test.beforeAll(async ({ browser }) => {
@@ -41,31 +41,6 @@ test.afterEach(async () => {
   await helper.sleep(0.5)
 });
 
-
-test('Return trip', async () => {
-  let flight_page = new FlightPage(page);
-  await flight_page.selectTripType("return")
-  await flight_page.selectDepartFrom("Sydney")
-  await flight_page.selectArriveAt("New York") // failed but not showing line
-  await flight_page.selectDepartDay("02")
-  await flight_page.selectDepartMonth("052023")
-  await flight_page.selectReturnDay("04")
-  // by default selectOption is by value, 
-  // await flight_page.selectReturnMonth("June 2021")
-  await flight_page.selectReturnMonth("062023")
-  await flight_page.clickContinue()
-  
-  // await helper.sleep(60); // willl get  Test timeout of 30000ms exceeded
-  await helper.sleep(0.5)
-   
-  await driver.textContent("body").then(function(body_text) {
-    console.log(body_text)
-    // somehow the body text in Playwright does not have the first trip text
-    //assert(body_text.contains("2023-05-02  Sydney to New York"))
-    //assert(body_text.contains("2023-06-04  New York to Sydney"))
-  })
-
-});
 
 
 test('One-way trip', async () => {

@@ -1,13 +1,12 @@
 <workspace>
     <opened_files>
         <entry name="/Users/zhimin/work/projects/buildwise-samples/e2e-playwright-test-refactored/tests/login.spec.ts"/>
-        <entry name="/Users/zhimin/work/projects/buildwise-samples/e2e-playwright-test-refactored/test_helper..js"/>
         <entry name="/Users/zhimin/work/projects/buildwise-samples/e2e-playwright-test-refactored/package.json"/>
     </opened_files>
     <recent_files>
         <entry name="/Users/zhimin/work/projects/buildwise-samples/e2e-playwright-test-refactored/package.json"/>
-        <entry name="/Users/zhimin/work/projects/buildwise-samples/e2e-playwright-test-refactored/test_helper..js"/>
         <entry name="/Users/zhimin/work/projects/buildwise-samples/e2e-playwright-test-refactored/tests/login.spec.ts"/>
+        <entry name="/Users/zhimin/work/projects/buildwise-samples/e2e-playwright-test-refactored/test_helper..js"/>
         <entry name="/Users/zhimin/work/projects/buildwise-samples/e2e-playwright-test-refactored/tests/login_refactored.spec.ts"/>
     </recent_files>
     <test_suites/>
