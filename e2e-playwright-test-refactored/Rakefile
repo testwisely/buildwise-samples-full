@@ -93,8 +93,8 @@ task "ci:ui_tests:quick" do
         junit_xml = File.expand_path File.join(reports_dir, File.basename(test_file).gsub(".spec.ts", ".xml"))
         headed_option = "--headed"
         test_file_name = File.basename(test_file)
-        # for macOS & Linux (ref: https://playwright.dev/docs/test-reporters)
-        cmd = "PLAYWRIGHT_JUNIT_OUTPUT_NAME= #{junit_xml} npx playwright test #{headed_option} --reporter=junit #{test_file_name} "
+        # for macOS & Linux (ref: https://playwright.dev/docs/test-reporters#junit-reporter)
+        cmd = "PLAYWRIGHT_JUNIT_OUTPUT_NAME=#{junit_xml} npx playwright test #{headed_option} --reporter=junit #{test_file_name} "
         puts cmd
         result = system(cmd)
         if exit_code == 0 && !result
