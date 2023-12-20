@@ -90,11 +90,10 @@ task "ci:ui_tests:quick" do
         # this time is full path
         next unless File.exist?(test_file)
         junit_xml = File.expand_path File.join(reports_dir, File.basename(test_file).gsub(".spec.ts", ".xml"))
+        headed_option = "--headed"
         if ENV["BROWSER_HEADLESS"] == "true"
           # enable headless by setting this environment variable in BuildWise project env variables.
-          heeaded_option = ""
-        else
-          heeaded_option = "--headed"
+          headed_option = ""
         end
         test_file_name = File.basename(test_file)
         # for macOS & Linux (ref: https://playwright.dev/docs/test-reporters#junit-reporter)
