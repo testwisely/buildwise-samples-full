@@ -92,6 +92,7 @@ task "ci:ui_tests:quick" do
         junit_xml = File.expand_path File.join(reports_dir, File.basename(test_file).gsub(".spec.ts", ".xml"))
         if ENV["BROWSER_HEADLESS"] == "true"
           # enable headless by setting this environment variable in BuildWise project env variables.
+          heeaded_option = ""
         else
           heeaded_option = "--headed"
         end
