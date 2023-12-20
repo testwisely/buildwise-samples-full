@@ -85,19 +85,21 @@ task "ci:ui_tests:quick" do
     current_working_dir = File.expand_path(File.dirname("."));
     test_project_dir = File.expand_path( File.dirname(__FILE__) )
     begin
-      puts "\n\n change working dir: #{test_project_dir}\n\n "
       FileUtils.chdir(test_project_dir)            
       specs_to_be_executed.each do |test_file|
         # this time is full path
         next unless File.exist?(test_file)
         junit_xml = File.expand_path File.join(reports_dir, File.basename(test_file).gsub(".spec.ts", ".xml"))
-        headed_option = "--headed"
+        if ENV["BROWSER_HEADLESS"] == "true"
+          # enable headless by setting this environment variable in BuildWise project env variables.
+        else
+          heeaded_option = "--headed"
+        end
         test_file_name = File.basename(test_file)
         # for macOS & Linux (ref: https://playwright.dev/docs/test-reporters#junit-reporter)
         cmd = "PLAYWRIGHT_JUNIT_OUTPUT_NAME=#{junit_xml} npx playwright test #{headed_option} --reporter=junit #{test_file_name} "
         puts cmd
         result = system(cmd)
-        puts("command result: #{result}")
         if exit_code == 0 && !result
           exit_code = -1
         end   
