@@ -82,17 +82,26 @@ task "ci:ui_tests:quick" do
 
     specs_to_be_executed = buildwise_determine_specs_for_quick_build(specs_for_quick_build, excluded_spec_files, $test_dir);
 
-    specs_to_be_executed.each do |test_file|
-      next unless File.exist?(File.join($test_dir, test_file))
-      junit_xml = File.expand_path File.join(reports_dir, File.basename(test_file).gsub(".spec.ts", ".xml"))
-      cmd = "npx playwright test #{headed_option} --reporter=junit #{junit_xml} #{test_file} "
-      puts cmd
-      result = system(cmd)
-      if exit_code == 0 && !result
-        exit_code = -1
-      end   
-      sleep 0.25
+    current_working_dir = File.expand_path(File.dirname("."));
+    test_project_dir = File.expand_path( File.dirname(__FILE__) )
+    begin
+      FileUtils.chdir(project_dir)            
+      specs_to_be_executed.each do |test_file|
+        next unless File.exist?(File.join($test_dir, test_file))
+        junit_xml = File.expand_path File.join(reports_dir, File.basename(test_file).gsub(".spec.ts", ".xml"))
+      
+        cmd = "npx playwright test #{headed_option} --reporter=junit #{junit_xml} #{test_file} "
+        puts cmd
+        result = system(cmd)
+        if exit_code == 0 && !result
+          exit_code = -1
+        end   
+        sleep 0.25
+      end
+    ensure
+      FileUtils.chdir(current_working_dir)
     end
+    
     exit(exit_code)  
 end
 
