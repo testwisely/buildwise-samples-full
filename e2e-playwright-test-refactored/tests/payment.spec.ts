@@ -13,6 +13,7 @@ let page: Page;
 // var FooPage = require('../pages/foo_page.js')
 var FlightPage = require('../pages/flight_page.js')
 var PassengerPage = require('../pages/passenger_page.js')
+var PaymentPage = require('../pages/payment_page.js')
 // END: import pages
 
 test.beforeAll(async ({ browser }) => {
@@ -20,22 +21,7 @@ test.beforeAll(async ({ browser }) => {
   page = await browser.newPage();
   await page.goto(helper.site_url());
   await helper.login(page, "agileway", "testwise")
-});
-
-test.afterAll(async () => {
-  await page.close();
-});
-
-test.beforeEach(async () => {
-  await page.goto(helper.site_url());
-});
-
-test.afterEach(async () => {
-  await helper.sleep(0.5)
-});
-
-
-test('Enter passenger details', async () => {  
+  
   let flight_page = new FlightPage(page);
   await flight_page.selectTripType("oneway")
   await flight_page.selectDepartFrom("Sydney")
@@ -52,9 +38,22 @@ test('Enter passenger details', async () => {
   await passenger_page.enterFirstName("Bob")
   await passenger_page.enterLastName("Builder")
   await passenger_page.clickNext();
-  
-  const inputElement = page.locator("[name=holder_name]");
-  const passengerName = await inputElement.getAttribute('value');
-  expect(passengerName).toEqual("Bob Builder")  
+  await helper.sleep(0.5)
+});
 
+test.afterAll(async () => {
+  await page.close();
+});
+
+
+test('Book flight with payment', async () => {
+  let payment_page = new PaymentPage(page);
+   await  payment_page.selectVisa()
+   await  payment_page.enterCardNumber("4242424242424242")
+   await  payment_page.clickPayNow();
+   // After above AJAX operation, Playwright wait for default timeout
+   const bookingNumber = await page.textContent("#booking_number")
+   console.log(bookingNumber)
+   expect(bookingNumber.length).toEqual(5)
+   
 });

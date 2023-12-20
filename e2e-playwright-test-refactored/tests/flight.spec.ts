@@ -1,31 +1,24 @@
 import { test, Page, expect } from '@playwright/test';
 var path = require("path");
-var assert = require('assert');
-String.prototype.contains = function(it) {
-  return this.indexOf(it) != -1;
-};
 
 test.describe.configure({ mode: 'serial' });
 
 var helper = require('../test_helper');
 
 //Reuse the page among the test cases in the test script file
-// While the Playwright's convention is to use page.xxx
-// Personally, Zhimin prefers driver.xxx; feel free to change to use page 
-//  let driver: Page; => let page: Page;
-let driver: Page;
 let page: Page;
 
 // An example in below:  var FlightPage = require('../pages/flight_page.js')
 // BEGIN: import pages
+// var FooPage = require('../pages/foo_page.js')
 var FlightPage = require('../pages/flight_page.js')
 
 // END: import pages
 
 test.beforeAll(async ({ browser }) => {
   // Create page once.
-  driver = page = await browser.newPage();
-  await page.goto('https://travel.agileway.net');
+  page = await browser.newPage();
+  await page.goto(helper.site_url());
   await helper.login(page, "agileway", "testwise")
 });
 
@@ -34,7 +27,7 @@ test.afterAll(async () => {
 });
 
 test.beforeEach(async () => {
-  await page.goto('https://travel.agileway.net');
+  await page.goto(helper.site_url());
 });
 
 test.afterEach(async () => {
@@ -57,12 +50,14 @@ test('Return trip', async () => {
   
   // await helper.sleep(60); // willl get  Test timeout of 30000ms exceeded
   await helper.sleep(0.5)
+  
+  //await expect(page.textContent('body')).toHaveText('2023-05-02  Sydney to New York');
    
-  await driver.textContent("body").then(function(body_text) {
+  await page.textContent("body").then(function(body_text) {
     console.log(body_text)
     // somehow the body text in Playwright does not have the first trip text
-    //assert(body_text.contains("2023-05-02  Sydney to New York"))
-    //assert(body_text.contains("2023-06-04  New York to Sydney"))
+    expect(body_text.contains("2023-05-02   Sydney to New York")).toBeTruthy();
+    expect(body_text.contains("2023-06-04  New York to Sydney")).toBeTruthy();
   })
 
 });
@@ -78,16 +73,11 @@ test('One-way trip', async () => {
   await flight_page.selectDepartMonth("052023")
   await flight_page.clickContinue()
   
-  // await helper.sleep(60); // willl get  Test timeout of 30000ms exceeded
-  await helper.sleep(0.5)
-  await expect(page).toHaveText("2023-05-02  Sydney to New York")
-  
-/*
-  await driver.textContent("body").then(function(body_text) {
+  await helper.sleep(0.5)  
+
+  await page.textContent("body").then(function(body_text) {
     console.log(body_text)
-    // somehow the body text in Playwright does not have the first trip text
-    assert(body_text.contains("2023-05-02  Sydney to New York"))
+    expect(body_text.contains("2023-05-02   Sydney to New York")).toBeTruthy();
   })
-*/
 
 });

@@ -4,6 +4,11 @@ var assert = require('assert');
 const fs = require('fs');
 const path = require('path');
 
+String.prototype.contains = function(it) {
+  return this.indexOf(it) != -1;
+};
+
+
 function debuggingPort() {
     var port_number = Math.floor((Math.random() * 40000) + 16000);
     var port_number_str = "" + port_number;

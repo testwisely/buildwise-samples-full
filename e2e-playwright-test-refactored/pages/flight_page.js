@@ -9,7 +9,7 @@ class FlightPage extends AbstractPage {
   async selectTripType(trip_type) {
     const radios = await this.page.$$("input[name=tripType]");
     if (trip_type == "oneway") {
-  await radios[1].check();
+      await radios[1].check();
     } else  {
         await radios[0].check();
     }

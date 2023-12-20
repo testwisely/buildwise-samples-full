@@ -1,22 +1,14 @@
 {
-  "name": "e2e-playwright-test",
+  "name": "Sample @playwright/test",
   "version": "1.0.0",
-  "description": "Playwright Test Sample project",
+  "description": "",
   "main": "index.js",
-  "dependencies": {
-    "fsevents": "^2.3.2",
-    "playwright-core": "^1.36.1"
-  },
+  "scripts": {},
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
   "devDependencies": {
-    "@playwright/test": "^1.38.1",
-    "playwright": "^1.38.1"
-  },
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "keywords": [
-    "Playwright"
-  ],
-  "author": "Zhimin Zhan",
-  "license": "ISC"
+    "@playwright/test": "^1.40.1",
+    "@types/node": "^20.10.3"
+  }
 }

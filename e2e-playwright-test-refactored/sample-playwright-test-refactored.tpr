@@ -1,0 +1,75 @@
+<project>
+    <name>sample-playwright-test-refactored</name>
+    <app_type>WebApp</app_type>
+    <default_browser>Chrome</default_browser>
+    <test_framework>Playwright</test_framework>
+    <syntax_framework>PlaywrightTest</syntax_framework>
+    <environments>
+        <entry name="development" default="false">
+            <base_url>http://localhost</base_url>
+        </entry>
+        <entry name="test" default="true">
+            <base_url>https://travel.agileway.net</base_url>
+        </entry>
+    </environments>
+    <exclude_dirs></exclude_dirs>
+    <exclude_files></exclude_files>
+    <spec_template>import { test, Page, expect } from '@playwright/test';
+var path = require("path");
+
+test.describe.configure({ mode: 'serial' });
+
+var helper = require('../test_helper');
+
+//Reuse the page among the test cases in the test script file
+let page: Page;
+
+// BEGIN: import pages
+// var FooPage = require('../pages/foo_page.js'))
+
+// END: import pages
+
+test.beforeAll(async ({ browser }) =&gt; {
+  // Create page once.
+  page = await browser.newPage();
+});
+
+test.afterAll(async () =&gt; {
+  await page.close();
+});
+
+test.beforeEach(async () =&gt; {
+  await page.goto(helper.site_url());
+});
+
+test('{{ TEST_CASE }}', async () =&gt; {
+  // 
+  // await helper.login(page, "agileway", "testwise")
+  // await page.locator("text=Sign off").click();
+  // const flashText = await page.textContent("#flash_notice")
+  // console.log(flashText);
+  // expect(flashText).toEqual('Signed in!');
+  
+  
+});
+
+</spec_template>
+    <page_template>const AbstractPage = require('./abstract_page');
+
+class {{ PAGE_NAME }} extends AbstractPage {
+
+  constructor(page) {
+    super(page);
+  }
+
+  // page functions here ...
+  
+  
+};
+
+module.exports = {{ PAGE_NAME }};
+</page_template>
+    <integration>
+        <jira url="" username="" password=""/>
+    </integration>
+</project>

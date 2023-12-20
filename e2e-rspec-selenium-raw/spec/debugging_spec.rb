@@ -11,6 +11,8 @@ describe "DEBUG" do
   end
 
   it "Debugging" do
-    driver.find_element(:id, "username").send_keys("agileway")
+    driver.find_element(:link_text, "Last")
+    puts driver.title
+     driver.find_element(:xpath, "//td/span[text()='WhenWise']/../../td/button[text()='Like']").click
   end
 end
