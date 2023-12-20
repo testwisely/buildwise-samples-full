@@ -18,45 +18,86 @@ BUILDWISE_URL = ENV["BUILDWISE_MASTER"] || "http://buildwise.dev"
 FULL_BUILD_MAX_TIME = ENV["DISTRIBUTED_MAX_BUILD_TIME"].to_i || 60 * 60   # max build time, over this, time out
 FULL_BUILD_CHECK_INTERVAL =  ENV["DISTRIBUTED_BUILD_CHECK_INTERVAL"].to_i || 20  # check interval for build complete
 
-$test_dir =  File.expand_path( File.join( File.dirname(__FILE__), "spec" ) )  # change to aboslution path if invocation is not this directory
+$test_dir =  File.expand_path( File.join( File.dirname(__FILE__), "tests" ) )  # change to aboslution path if invocation is not this directory
 # rspec will create 'spec/reports' under check out dir
 
 # List tests you want to exclude
 #
 def excluded_spec_files
   # NOTE, testing only for faster develping agent, remove a couple of test later
-  ["debugging_spec.rb", "03_passenger_spec.rb"]
+  ["debugging.spec.ts", "03_passenger.spec.ts"]
 end
 
 def all_specs
-  Dir.glob("#{$test_dir}/*_spec.rb")
+  Dir.glob("#{$test_dir}/*.spec.ts")
 end
 
 def specs_for_quick_build
   # list test files to be run in a quick build, leave the caller to set full path
   [
-    "01_login_spec.rb", 
-    "02_flight_spec.rb",
-    "03_passenger_spec.rb",
-    "04_payment_spec.rb",
+    "login.spec.ts", 
+    "flight.spec.ts",
+    "passenger.spec.ts",
+    "payment.spec.ts",
     "not_exists_spec.rb" # will exclude non-exists test quietly
   ]
 end
 
 
-desc "run tests in this spec/ folder, option to use INTELLIGENT_ORDERING or/and DYNAMIC_FEEDBACK"
-RSpec::Core::RakeTask.new("ui_tests:quick") do |t|
-  specs_to_be_executed = buildwise_determine_specs_for_quick_build(specs_for_quick_build, excluded_spec_files, $test_dir);
-  buildwise_formatter =  File.join(File.dirname(__FILE__), "buildwise_rspec_formatter.rb")
-  t.rspec_opts = "--pattern my_own_custom_order --require #{buildwise_formatter} #{specs_to_be_executed.join(' ')} --order defined"
+desc "run all tests in this folder"
+task "ui_tests:quick" do
+    reports_dir = File.join(File.dirname(__FILE__),  "reports")
+    FileUtils.rm_rf(reports_dir)if File.exist?(reports_dir)
+    FileUtils.mkdir_p(reports_dir)
+    
+    exit_code = 0
+
+    specs_to_be_executed = specs_for_quick_build();
+  
+    headed_option = "--headed"
+    
+    specs_to_be_executed.each do |test_file|
+      next unless File.exist?(File.join($test_dir, test_file))
+      junit_xml = File.expand_path File.join(reports_dir, File.basename(test_file).gsub(".spec.ts", ".xml"))
+      cmd = "npx playwright test #{headed_option} --reporter=junit #{junit_xml} #{test_file} "
+      puts cmd
+      result = system(cmd)
+      if exit_code == 0 && !result
+        exit_code = -1
+      end   
+      sleep 0.25
+    end
+    exit(exit_code)  
 end
 
 
-desc "run quick tests from BuildWise"
-task "ci:ui_tests:quick" => ["ci:setup:rspec"] do
-  build_id = buildwise_start_build(:working_dir => File.expand_path(File.dirname(__FILE__)))
-  buildwise_run_sequential_build_target(build_id, "ui_tests:quick")
+
+desc "Quick build for BuildWise"
+task "ci:ui_tests:quick" do
+    reports_dir = File.join(File.dirname(__FILE__),  "reports")
+    FileUtils.rm_rf(reports_dir)if File.exist?(reports_dir)
+    FileUtils.mkdir_p(reports_dir)
+    
+    exit_code = 0
+
+    specs_to_be_executed = buildwise_determine_specs_for_quick_build(specs_for_quick_build, excluded_spec_files, $test_dir);
+
+    specs_to_be_executed.each do |test_file|
+      next unless File.exist?(File.join($test_dir, test_file))
+      junit_xml = File.expand_path File.join(reports_dir, File.basename(test_file).gsub(".spec.ts", ".xml"))
+      cmd = "npx playwright test #{headed_option} --reporter=junit #{junit_xml} #{test_file} "
+      puts cmd
+      result = system(cmd)
+      if exit_code == 0 && !result
+        exit_code = -1
+      end   
+      sleep 0.25
+    end
+    exit(exit_code)  
 end
+
+
+
 
 
 ## Full Build
