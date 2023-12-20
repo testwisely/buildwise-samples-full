@@ -97,6 +97,7 @@ task "ci:ui_tests:quick" do
         cmd = "PLAYWRIGHT_JUNIT_OUTPUT_NAME=#{junit_xml} npx playwright test #{headed_option} --reporter=junit #{test_file_name} "
         puts cmd
         result = system(cmd)
+        puts("command result: #{result}")
         if exit_code == 0 && !result
           exit_code = -1
         end   
@@ -106,6 +107,7 @@ task "ci:ui_tests:quick" do
       FileUtils.chdir(current_working_dir)
     end
     
+    puts("Exit code: #{exit_code}")
     exit(exit_code)  
 end
 
