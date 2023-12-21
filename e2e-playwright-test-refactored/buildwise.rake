@@ -144,10 +144,10 @@ def buildwise_montior_parallel_execution(build_id, opts = {})
         end
     
         if the_build_status == "OK"
-          fio.close
+          fio.close if fio
           exit 0
         elsif the_build_status == "Failed"
-          fio.close
+          fio.close  if fio
           exit -1
         else 
           if (the_build_status != "Pending")
