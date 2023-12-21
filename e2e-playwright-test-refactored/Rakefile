@@ -122,7 +122,7 @@ end
 desc "Running tests distributedly"
 task "ci:ui_tests:full" => ["ci:setup:rspec"] do
   build_id = buildwise_start_build(:working_dir => File.expand_path(File.dirname(__FILE__)),
-                                   :ui_test_dir => ["spec"],
+                                   :ui_test_dir => ["tests"],
                                    :excluded => excluded_spec_files || [],
                                    :distributed => true
   )
