@@ -125,7 +125,7 @@ task "ci:ui_tests:full" => ["ci:setup:rspec"] do
                                    :ui_test_dir => ["tests"],
                                    :excluded => excluded_spec_files || [],
                                    :parallel => true,
-                                   :test_framework => "PlaywrightTest"  
+                                   :test_syntax_framework => "PlaywrightTest"  
   )
   buildwise_montior_parallel_execution(build_id, :max_wait_time => FULL_BUILD_MAX_TIME, :check_interval => FULL_BUILD_CHECK_INTERVAL)  
 end

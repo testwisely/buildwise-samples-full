@@ -183,7 +183,7 @@ task "ci:ui_tests:full"  do
     :ui_test_dir => ["features"],
     :excluded => excluded_feature_files || [],
     :parallel => true,
-    :test_framework => "Cucumber"  
+    :test_syntax_framework => "Cucumber"  
   )
 
   buildwise_montior_parallel_execution(build_id, :max_wait_time => FULL_BUILD_MAX_TIME, :check_interval => FULL_BUILD_CHECK_INTERVAL)
