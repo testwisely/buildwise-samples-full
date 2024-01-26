@@ -41,11 +41,11 @@ test('Return trip', async () => {
   await flight_page.selectDepartFrom("Sydney")
   await flight_page.selectArriveAt("New York") // failed but not showing line
   await flight_page.selectDepartDay("02")
-  await flight_page.selectDepartMonth("052023")
+  await flight_page.selectDepartMonth("052025")
   await flight_page.selectReturnDay("04")
   // by default selectOption is by value, 
   // await flight_page.selectReturnMonth("June 2021")
-  await flight_page.selectReturnMonth("062023")
+  await flight_page.selectReturnMonth("062025")
   await flight_page.clickContinue()
   
   // await helper.sleep(60); // willl get  Test timeout of 30000ms exceeded
@@ -56,8 +56,8 @@ test('Return trip', async () => {
   await page.textContent("body").then(function(body_text) {
     console.log(body_text)
     // somehow the body text in Playwright does not have the first trip text
-    expect(body_text.contains("2023-05-02   Sydney to New York")).toBeTruthy();
-    expect(body_text.contains("2023-06-04  New York to Sydney")).toBeTruthy();
+    expect(body_text.contains("2025-05-02   Sydney to New York")).toBeTruthy();
+    expect(body_text.contains("2025-06-04  New York to Sydney")).toBeTruthy();
   })
 
 });
@@ -70,14 +70,14 @@ test('One-way trip', async () => {
   await flight_page.selectDepartFrom("Sydney")
   await flight_page.selectArriveAt("New York") // failed but not showing line
   await flight_page.selectDepartDay("02")
-  await flight_page.selectDepartMonth("052023")
+  await flight_page.selectDepartMonth("052025")
   await flight_page.clickContinue()
   
   await helper.sleep(0.5)  
 
   await page.textContent("body").then(function(body_text) {
     console.log(body_text)
-    expect(body_text.contains("2023-05-02   Sydney to New York")).toBeTruthy();
+    expect(body_text.contains("2025-05-02   Sydney to New York")).toBeTruthy();
   })
 
 });

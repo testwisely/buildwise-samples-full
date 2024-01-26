@@ -41,7 +41,7 @@ test('Enter passenger details', async () => {
   await flight_page.selectDepartFrom("Sydney")
   await flight_page.selectArriveAt("New York") // failed but not showing line
   await flight_page.selectDepartDay("02")
-  await flight_page.selectDepartMonth("052023")
+  await flight_page.selectDepartMonth("052025")
   await flight_page.clickContinue()
   
   // await helper.sleep(60); // willl get  Test timeout of 30000ms exceeded
