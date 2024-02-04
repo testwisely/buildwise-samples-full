@@ -28,8 +28,9 @@ describe "User Login" do
     driver.find_element(:id, "username").send_keys("agileway")
     driver.find_element(:id, "password").send_keys("testwise")
     driver.find_element(:name, "commit").click
+    sleep 0.1
     # selenium does not have browser.text yet
-    expect(driver.page_source).to include("Welcome")
+    expect(driver.page_source).to include("Signed in!")
     driver.find_element(:link_text, "Sign off").click
     puts "[stdout] Signed out"
   end

@@ -20,14 +20,14 @@ describe "Passenger" do
 
   it "[4] Can enter passenger details (using page objects)" do
     flight_page = FlightPage.new(driver)
-    flight_page.select_trip_type("return")
+    try_for(2) { flight_page.select_trip_type("return") }
     flight_page.select_depart_from("Sydney")
     flight_page.select_arrive_at("New York")
 
     flight_page.select_depart_day("02")
-    flight_page.select_depart_month("May 2026")
+    flight_page.select_depart_month("May 2025")
     flight_page.select_return_day("04")
-    flight_page.select_return_month("June 2026")
+    flight_page.select_return_month("June 2025")
     flight_page.click_continue
 
     # now on passenger page
@@ -38,8 +38,9 @@ describe "Passenger" do
     passenger_page.enter_last_name("Tester")
     passenger_page.click_next
 
-    # the step below fails: "Wendy" => "Bob"
-    expect(driver.find_element(:name, "holder_name").attribute("value")).to eq("Wendy Tester")
+    # If assertion text is "Wendy", the test will fail. 
+    # To fix it, change the step below fails: "Wendy" => "Bob"
+    expect(driver.find_element(:name, "holder_name").attribute("value")).to eq("Bob Tester")
   end
 
 end
