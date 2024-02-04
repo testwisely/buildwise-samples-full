@@ -29,9 +29,9 @@ describe "Select Flights" do
     flight_page.select_arrive_at("New York")
 
     flight_page.select_depart_day("02")
-    flight_page.select_depart_month("May 2023")
+    flight_page.select_depart_month("May 2026")
     flight_page.select_return_day("04")
-    flight_page.select_return_month("June 2023")
+    flight_page.select_return_month("June 2026")
     flight_page.click_continue
 
     expect(page_text).to include("2023-05-02 Sydney to New York")
@@ -45,7 +45,7 @@ describe "Select Flights" do
     flight_page.select_arrive_at("New York")
 
     flight_page.select_depart_day("02")
-    flight_page.select_depart_month("May 2023")
+    flight_page.select_depart_month("May 2026")
     flight_page.click_continue
 
     expect(page_text).to include("2023-05-02 Sydney to New York")
