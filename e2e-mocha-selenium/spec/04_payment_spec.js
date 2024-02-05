@@ -36,6 +36,19 @@ describe('Payment', function() {
     this.timeout(timeOut);
     await driver.get(helper.site_url());
     await helper.login(driver, "agileway", "testwise");
+    
+    let flight_page = new FlightPage(driver);
+    await flight_page.selectTripType("oneway")
+    await flight_page.selectDepartFrom("New York")
+    await flight_page.selectArriveAt("Sydney")
+    await flight_page.selectDepartDay("02")
+    await flight_page.selectDepartMonth("May 2023")
+    await flight_page.clickContinue()
+
+    let passenger_page = new PassengerPage(driver)
+    await passenger_page.enterFirstName("Bob")
+    await passenger_page.enterLastName("Tester")
+    await passenger_page.clickNext();
   });
 
   afterEach(async function() {
@@ -51,23 +64,14 @@ describe('Payment', function() {
 
   it('[5] Book flight with payment', async function() {
     this.timeout(timeOut);
-    let flight_page = new FlightPage(driver);
-    await flight_page.selectTripType("oneway")
-    await flight_page.selectDepartFrom("New York")
-    await flight_page.selectArriveAt("Sydney")
-    await flight_page.selectDepartDay("02")
-    await flight_page.selectDepartMonth("May 2023")
-    await flight_page.clickContinue()
-
-    let passenger_page = new PassengerPage(driver)
-    await passenger_page.enterFirstName("Bob")
-    await passenger_page.enterLastName("Tester")
-    await passenger_page.clickNext();
 
     let payment_page = new PaymentPage(driver)
-    await driver.findElement(By.xpath("//input[@name='card_type' and @value='visa']")).click();
-    await driver.findElement(By.name("card_number")).sendKeys("4242424242424242");
-    await driver.findElement(By.xpath("//input[@value='Pay now']")).click();
+    await payment_page.selectVisa();
+    await payment_page.enterHolderName("Bob the Tester")
+    await payment_page.enterCardNumber("4242424242424242");
+    await payment_page.selectExpiryMonth("04")
+    await payment_page.selectExpiryYear("2025")
+    await payment_page.clickPayNow();
     await driver.sleep(10000)
     await driver.findElement(By.tagName("body")).getText().then(function(text) {
       assert(text.contains("Booking number"))
