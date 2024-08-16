@@ -214,8 +214,11 @@ module TestHelper
       caps: {
         automationName: "xcuitest",
         platformName: "ios",
-        platformVersion: "16.1",
-        deviceName: "iPhone 13",
+        platformVersion: "17.5", # NOTE: platformVersion changess
+        # check your Xcode -> Settings -> Platforms (NOT REALLY)
+        # when failed, check the server console, usch as 
+        # Encountered internal error running command: Error: '17' does not exist in the list of simctl SDKs. Only the following Simulator SDK versions are available on your system: 12.0, 16.2, 13.2, 11.4, 16.1, 13.1, 15.5, 16.0, 13.0, 15.4, 12.4, 17.0, 15.2, 12.2, 16.4, 12.1, 13.3, 14.5, 15.0a
+        deviceName: "iPhone 15",
         #fullReset: true,
         noReset: false,
         app: app_path, # install OK
